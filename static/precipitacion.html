@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=720, height=1236, initial-scale=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="AdminKit">
+    <meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+    <title>Geovisor</title>
+
+    <!-- Estilos para el dashboard y el mapa -->
+    <link href="css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        form label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        form select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        form button {
+            background-color: #4b3b9b;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #3b2a6f;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+                <a class="sidebar-brand" href="index.html">
+                    <span class="align-middle">Geovisor</span>
+                </a>
+
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">Modulos</li>
+                        <a class="sidebar-link" href="index.html">
+                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Inicio</span>
+                        </a>
+                    <!-- Módulo de Humedad Relativa -->
+					<li class="sidebar-item">
+                        
+						<a class="sidebar-link" href="humedad-relativa.html">
+              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Humedad Relativa</span>
+            </a>
+        
+					</li>
+					<!-- Módulo de Presión Atmosférica -->
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="presion-atmosferica.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Presión Atmosférica</span>
+                        </a>
+                    </li>
+                     <!-- Módulo de Radiación Difusa -->
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="radiacion-difusa.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Radiación Difusa</span>
+                        </a>
+                    </li>
+                    <!-- Módulo de Radiación Global -->
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="radiacion-global.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Radiación Global</span>
+                        </a>
+                    </li>
+                    <!-- Módulo de Temperatura del Suelo -->
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="temperatura-suelo.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Temperatura del Suelo</span>
+                        </a>
+                    </li>
+                    <!-- Módulo de Precipitación -->
+					<li class="sidebar-item">
+                        <li class="sidebar-item active">
+                        <a class="sidebar-link" href="precipitacion.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Precipitación</span>
+                        </a>
+                    </li>
+                    </li>
+                    <!-- Módulo de Velocidad y Dirección del Viento -->
+					<li class="sidebar-item">
+                        <a class="sidebar-link" href="velocidad-direccion-viento.html">
+                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Velocidad y Dirección del Viento</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+        <!-- codigo para que exista estabilidad del sidebar -->
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+            </nav>
+            
+            <!-- Formulario de selección de región -->
+            <div class="container">
+                <h1>Formulario de Selección</h1>
+                <form id="selectionForm">
+                    <label for="region">Selecciona la región:</label>
+                    <select id="region" name="region" required>
+                        <option value="Chimborazo">Chimborazo</option>
+                        <option value="Bolivar">Bolívar</option>
+                        <option value="Tungurahua">Tungurahua</option>
+                    </select>
+                    <button type="submit">Mostrar datos</button>
+                </form>
+            </div>
+
+            <!-- Sección de estadísticas dinámicas -->
+            <div class="container" id="statsContainer" style="display:none;">
+                <h1 id="module-title"> Precipitación</h1>
+                <h2 id="region-name">Región: </h2>
+
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Scripts de la plantilla y la funcionalidad -->
+     <script src="js/app.js"></script>
+     <script>
+        // Referencias al DOM
+        const form = document.getElementById('selectionForm');
+        const statsContainer = document.getElementById('statsContainer');
+
+        let barChartInstance, lineChartInstance; // Para almacenar las instancias de los gráficos
+
+        // Datos de ejemplo por región (solo de temperatura)
+        const dataByRegion = {
+            Chimborazo: { max: 30, min: 5, media: 18, trend: [5, 10, 15, 20, 25, 30] },
+            Bolivar: { max: 28, min: 7, media: 16, trend: [7, 12, 17, 22, 28] },
+            Tungurahua: { max: 25, min: 8, media: 17, trend: [8, 10, 15, 20, 25] }
+        };
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+
+            const selectedRegion = form.region.value;
+            const { max, min, media, trend } = dataByRegion[selectedRegion];
+
+            document.getElementById('region-name').innerText = `Región: ${selectedRegion}`;
+            statsContainer.style.display = 'block';
+
+            if (barChartInstance) barChartInstance.destroy(); // Destruir gráfico anterior
+            if (lineChartInstance) lineChartInstance.destroy(); // Destruir gráfico anterior
+
+            // Crear gráficos
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            barChartInstance = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Máximo', 'Mínimo', 'Media'],
+                    datasets: [{
+                        label: 'Temperaturas',
+                        data: [max, min, media],
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            lineChartInstance = new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: trend.map((_, i) => `Mes ${i + 1}`),
+                    datasets: [{
+                        label: 'Tendencia de Temperatura',
+                        data: trend,
+                        fill: false,
+                        borderColor: '#4bc0c0',
+                        tension: 0.1
+                    }]
+                }
+            });
+        });
+    </script>
+
+   
+</body>
+</html>

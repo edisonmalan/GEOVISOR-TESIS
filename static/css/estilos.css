@@ -1,0 +1,270 @@
+/* Estilo del mapa */
+#map {
+    width: 100%;
+    height: 100vh;
+}
+
+/* Contenedor para el cuadro de control de Capas */
+#controls-container {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten */
+    align-items: center; /* Alineación vertical de los elementos */
+    gap: 20px; /* Espacio entre los controles */
+    z-index: 1000;
+    max-width: 90%; /* Limitar el ancho total */
+}
+
+/* Contenedor para el control de los mapas Base */
+#control-container {
+    position: absolute;
+    top: 65px;
+    right: 300px;
+    display: flex;
+    flex-wrap: wrap; /* Ajustar elementos en pantallas pequeñas */
+    align-items: center; /* Alineación vertical de los elementos */
+    gap: 20px; /* Espacio entre los controles */
+    z-index: 1000;
+    max-width: 90%; /* Limitar el ancho total */
+}
+
+/* Estilo del control de subsecciones */
+#section-control {
+    background-color: #1c1f2b; /* Color negro azulado */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #f1f1f1;
+    transition: all 0.3s ease-in-out; /* Transición suave */
+    width: 100%; /* Ajuste automático al contenedor */
+    max-width: 400px; /* Ancho máximo para mantener el diseño */
+}
+
+/* Estilo de los títulos de los menús */
+#section-control h4 {
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-align: center;
+    border-bottom: 2px solid #007bff; /* Azul tipo Bootstrap */
+    padding-bottom: 5px;
+}
+
+/* Estilo de la barra de los mapas */
+#layer-control {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Ajuste para evitar desbordes */
+    display: none; /* Inicialmente oculta */
+    position: absolute;
+    top: 100px;
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%);
+    z-index: 1000;
+    max-height: 600px; /* Ajusta la altura máxima para que active el scroll */
+    overflow-y: auto; /* Barra deslizante vertical */
+    width: 90%; /* Ajustar a pantallas pequeñas */
+    max-width: 600px; /* Limitar el ancho máximo */
+}
+
+/* Botón para abrir la barra */
+#layer-toggle {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Botón responsivo */
+    max-width: 200px; /* Ancho máximo */
+}
+
+/* Estilo del control de capas */
+#layer-control {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+/* Estilo de los botones del menú */
+ul#section-menu {
+    padding: 0;
+    margin: 0;
+}
+
+ul#section-menu li {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #2a2f3b; /* Fondo oscuro */
+    border: 1px solid #3a3f4b; /* Borde más claro */
+    margin: 5px 0;
+    border-radius: 5px;
+    color: #ffffff;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave en hover */
+}
+
+ul#section-menu li:hover {
+    background-color: #007bff; /* Azul tipo Bootstrap */
+    transform: scale(1.05); /* Efecto de zoom */
+    color: #f1f1f1;
+}
+
+/* Submenú oculto */
+ul.submenu {
+    display: none;
+    padding-left: 20px;
+}
+
+ul.submenu li {
+    list-style-type: none;
+    background-color: #1c1f2b; /* Color negro azulado */
+    border: 1px solid #007bff;
+    padding: 8px;
+    border-radius: 4px;
+    color: #f1f1f1;
+    margin: 3px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Efecto al hacer hover en submenú */
+ul.submenu li:hover {
+    background-color: #007bff;
+    transform: scale(1.03); /* Efecto de zoom en el submenú */
+    color: #ffffff;
+}
+
+/* Animación al mostrar las opciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+ul#section-menu li, ul.submenu li {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilo del botón de información */
+.info-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 11px;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 3px 8px;
+    transition: background-color 0.3s ease;
+    max-width: 40px; /* Tamaño máximo del botón */
+   
+}
+
+.info-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo de la ventana emergente */
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2a2f3b;
+    color: #ffffff;
+    padding: 20px; /* Ajuste de padding */
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+    max-width: 90%; /* Ajuste automático al tamaño de pantalla */
+    max-height: 80%; /* Limitar la altura en pantallas pequeñas */
+    overflow-y: auto; /* Barra de desplazamiento en caso de contenido extenso */
+    text-align: center;
+}
+
+#popup button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#popup button:hover {
+    background-color: #0056b3;
+}
+
+/* Contenedor colapsado */
+#section-control.collapsed {
+    height: 0;
+    overflow: hidden; /* Ocultar el contenido al contraer */
+    transition: height 0.3s ease-in-out; /* Animación suave en la contracción */
+    max-width: 100%; /* Asegura que no desborde el contenedor */
+}
+
+#collapse-options {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 14px;
+    max-width: 90%; /* Limita el tamaño del botón en pantallas pequeñas */
+    word-wrap: break-word; /* Permite el ajuste de texto si es necesario */
+}
+
+#clear-layers {
+    margin-top: 10px;
+    width: calc(100% - 20px);
+    background: #f44336;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+#clear-layers:hover {
+    background: #d32f2f;
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+    #controls-container, #control-container {
+        flex-direction: column; /* Organiza los elementos en columna */
+        align-items: flex-end; /* Alinea al borde derecho */
+        gap: 10px; /* Reduce los espacios entre elementos */
+    }
+
+    #section-control {
+        max-width: 95%; /* Ocupa casi todo el ancho disponible */
+        margin: 0 auto; /* Centra el control en la pantalla */
+        padding: 10px; /* Reduce el padding */
+    }
+
+    #layer-toggle {
+        width: 90%; /* Botón más ancho para pantallas pequeñas */
+        margin: 0 auto; /* Centra el botón */
+    }
+
+    #map {
+        height: calc(100vh - 50px); /* Ajusta el mapa al alto disponible */
+    }
+
+    ul#section-menu li, ul.submenu li {
+        font-size: 14px; /* Reduce el tamaño del texto */
+    }
+
+    #popup {
+        width: 90%; /* Reduce el ancho del popup en pantallas pequeñas */
+    }
+}
+
