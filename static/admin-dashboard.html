@@ -14,7 +14,7 @@
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-	<title>AdminKit Demo - Bootstrap 5 Admin Template</title>
+	<title>Administrador</title>
 	
 
 	<link href="css/app.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
+				<a class="sidebar-brand" href="admin-dashboard.html">
           <span class="align-middle">Administrador</span>
         </a>
 
@@ -40,10 +40,31 @@
             </a>
 					</li>
 
+			<!-- Desplegable de la Carga de datos -->
+			<li class="sidebar-item">
+				<a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#cargadatos-menu" role="button" aria-expanded="false" aria-controls="cargadatos-menu">
+					<i class="align-middle" data-feather="server"></i> <span class="align-middle">Carga de Datos</span>
+				</a>
+				<ul class="sidebar-dropdown list-unstyled collapse" id="cargadatos-menu">
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="carga-datos.html">
-              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Carga de datos</span>
-            </a>
+						<a class="sidebar-link" href="humedad-relativa.html">
+							<i class="align-middle" data-feather="play"></i> <span class="align-middle">ICA y Bloques</span>
+						  </a>
+					</li>
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="carga-clima.html">
+							<i class="align-middle" data-feather="play"></i> <span class="align-middle">Clima</span>
+						  </a>
+					</li>
+					<li class="sidebar-item">
+						
+						<a class="sidebar-link" href="carga-caudales.html">
+							<i class="align-middle" data-feather="play"></i> <span class="align-middle">Caudales</span>
+						  </a>
+					</li>
+					
+				</ul>
+			</li>
 					
 					<li class="sidebar-item">
 						<a class="sidebar-link" href="crud-usuarios.html">

@@ -19,3 +19,13 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+#guardar-ica {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
+
+#subir-txt {
+    background-color: #28a745;
+    border-color: #28a745;
+}

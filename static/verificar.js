@@ -1,16 +1,32 @@
-document.getElementById('loginForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevenir el envío del formulario
+// Manejo del formulario de login
+document.getElementById("loginForm").addEventListener("submit", function (event) {
+    event.preventDefault();  // Evita que se recargue la página
 
-    // Obtener los valores de los campos de correo y contraseña
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById("email").value;  // Obtén el correo del formulario
+    const password = document.getElementById("password").value;  // Obtén la contraseña del formulario
 
-    // Verificar si las credenciales son correctas
-    if (email === 'benito@geovisor.com' && password === 'geovisor') {
-        // Redirigir a la página deseada
-        window.location.href = 'admin-dashboard.html'; // Cambia 'pagina_deseada.html' por el archivo al que quieras redirigir
-    } else {
-        // Mostrar mensaje de error
-        document.getElementById('errorMessage').textContent = 'Credenciales incorrectas';
-    }
+    // Realiza una solicitud POST al backend
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',  // Asegura que los datos se envíen como JSON
+        },
+        body: JSON.stringify({
+            email: email,  // Envía el correo
+            password: password  // Envía la contraseña
+        })
+    })
+    .then(response => response.json())  // Espera una respuesta JSON
+    .then(data => {
+        if (data.success) {
+            // Si el login es exitoso, redirige al dashboard
+            window.location.href = data.redirectUrl;  // Usamos la URL proporcionada por el servidor
+        } else {
+            // Si hay un error (como credenciales incorrectas), muestra el mensaje
+            document.getElementById("errorMessage").innerText = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 });

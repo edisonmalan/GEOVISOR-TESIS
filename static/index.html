@@ -12,13 +12,14 @@
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
     <title>Geovisor</title>
-
+    <link rel="canonical" href="https://demo-basic.adminkit.io/icons-feather.html" />
     <!-- Estilos para el dashboard y el mapa -->
     <link href="css/app.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="css/estilos.css">
-
+    
+    
     
 
 </head>
@@ -28,63 +29,220 @@
    
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
+            <div class="sidebar-content js-simplebar" style="max-height: 95vh; overflow-y: auto;">
                 <a class="sidebar-brand" href="index.html">
                     <span class="align-middle">Geovisor</span>
                 </a>
-
+        
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Modulos</li>
+                    
                     <li class="sidebar-item active">
                         <a class="sidebar-link" href="index.html">
                             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Inicio</span>
                         </a>
                     </li>
-                    <!-- Módulo de Humedad Relativa -->
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="humedad-relativa.html">
-              <i class="align-middle" data-feather="book"></i> <span class="align-middle">Humedad Relativa</span>
-            </a>
-					</li>
-					<!-- Módulo de Presión Atmosférica -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="presion-atmosferica.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Presión Atmosférica</span>
+                     <!-- Desplegable del Clima -->
+            <li class="sidebar-item">
+                <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#clima-menu" role="button" aria-expanded="false" aria-controls="clima-menu">
+                    <i class="align-middle" data-feather="cloud"></i> <span class="align-middle">Clima</span>
+                </a>
+                <ul class="sidebar-dropdown list-unstyled collapse" id="clima-menu">
+                    <!-- Opciones del clima que al hacer click, se despliegan las opciones Diario, Mensual y Anual -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#humedad-menu" role="button" aria-expanded="false" aria-controls="humedad-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Humedad Relativa</span>
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="humedad-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
                     </li>
-                     <!-- Módulo de Radiación Difusa -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="radiacion-difusa.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Radiación Difusa</span>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#presion-menu" role="button" aria-expanded="false" aria-controls="presion-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Presión Atmosférica</span> 
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="presion-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
                     </li>
-                    <!-- Módulo de Radiación Global -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="radiacion-global.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Radiación Global</span>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#radiacion-menu" role="button" aria-expanded="false" aria-controls="radiacion-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Radiación Difusa</span> 
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="radiacion-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
                     </li>
-                    <!-- Módulo de Temperatura del Suelo -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="temperatura-suelo.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Temperatura del Suelo</span>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#radiacion-global-menu" role="button" aria-expanded="false" aria-controls="radiacion-global-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Radiación Global</span>
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="radiacion-global-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
                     </li>
-                    <!-- Módulo de Precipitación -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="precipitacion.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Precipitación</span>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#temperatura-menu" role="button" aria-expanded="false" aria-controls="temperatura-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Temperatura del Suelo</span> 
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="temperatura-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
                     </li>
-                    <!-- Módulo de Velocidad y Dirección del Viento -->
-					<li class="sidebar-item">
-                        <a class="sidebar-link" href="velocidad-direccion-viento.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Velocidad y Dirección del Viento</span>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#temperatura-2m-menu" role="button" aria-expanded="false" aria-controls="temperatura-2m-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Temperatura a 2 metros</span> 
                         </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="temperatura-2m-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#precipitacion-menu" role="button" aria-expanded="false" aria-controls="precipitacion-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Precipitación</span> 
+                        </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="precipitacion-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#viento-menu" role="button" aria-expanded="false" aria-controls="viento-menu">
+                            <i class="align-middle" data-feather="play"></i> <span class="align-middle">Velocidad y Dirección del Viento</span> 
+                        </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="viento-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Diario</span>
+                              </a>
+
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Mensual</span>
+                              </a>
+                              <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Anual</span>
+                              </a> 
+                        </ul>
                     </li>
                 </ul>
+            </li>
+                    <!-- Desplegable de la calidad del agua -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#calidad-menu" role="button" aria-expanded="false" aria-controls="calidad-menu">
+                            <i class="align-middle" data-feather="droplet"></i> <span class="align-middle">Calidad del agua</span>
+                        </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="calidad-menu">
+        
+                            <!-- Desplegable de los Bloques de chimborazo, tungurahua, bolivar -->
+                            <li class="sidebar-item">
+                                <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#bloques-menu" role="button" aria-expanded="false" aria-controls="bloques-menu">
+                                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">ICA</span>
+                                </a>
+                                <ul class="sidebar-dropdown list-unstyled collapse" id="bloques-menu">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="temperatura-suelo.html">
+                                            <i class="align-middle" data-feather="box"></i>
+                                            <span class="align-middle">Bloque Tungurahua</span>
+                                        </a>
+                                        
+                                    </li>
+                                    
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="precipitacion.html">
+                                            <i class="align-middle" data-feather="box"></i>
+                                            <span class="align-middle">Bloque Chimborazo</span>
+                                            </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="velocidad-direccion-viento.html">
+                                            <i class="align-middle" data-feather="box"></i>
+                                            <span class="align-middle">Bloque Bolívar</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Desplegable de Caudales del Rio -->
+                    <li class="sidebar-item">
+                        <a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#caudales-menu" role="button" aria-expanded="false" aria-controls="caudales-menu">
+                            <i class="align-middle" data-feather="align-justify"></i> <span class="align-middle">Caudales</span>
+                        </a>
+                        <ul class="sidebar-dropdown list-unstyled collapse" id="caudales-menu">
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="play"></i> <span class="align-middle">Rio 1</span>
+                              </a>
+
+                            <a class="sidebar-link" href="carga-caudales.html">
+                                <i class="align-middle" data-feather="play"></i> <span class="align-middle">Rio 2</span>
+                              </a>
+                        </ul>
+                    </li>
+        
+                </ul>
             </div>
-        </nav>
+        </nav>        
 
         <div class="main">
             
@@ -143,6 +301,6 @@
   <script src="cuadros-opciones.js"></script>
   <script src="logica-capas.js"></script>
   <script src="descargar-shapes.js"></script>
-  
+
 </body>
 </html>

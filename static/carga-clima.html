@@ -15,7 +15,7 @@
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 	<link rel="stylesheet" href="css/estilo-crud.css">
 
-	<title>Carga de Datos</title>
+	<title>CLIMA</title>
 
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -66,8 +66,6 @@
 
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-						
-						
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                               <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Benito Mendoza" /> <span class="text-dark">Benito Mendoza</span>
@@ -87,7 +85,24 @@
 			</nav>
 
 			<main class="content">
-				AQUI ESTARA LA CARGA DE DATOS
+                <h1>Carga de datos de los aspectos del Clima</h1>
+                <form action="backend.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="csv_file" class="form-label">Seleccionar archivo CSV</label>
+                        <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="region" class="form-label">Seleccionar Región</label>
+                        <select class="form-select" id="region" name="region" required>
+                            <option value="1">Chimborazo</option>
+                            <option value="2">Tungurahua</option>
+                            <option value="3">Bolívar</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Subir archivo</button>
+                </form>
 			</main>
 
 			<footer class="footer">
@@ -121,8 +136,6 @@
 	</div>
 
 	<script src="js/app.js"></script>
-
-	
 
 </body>
 

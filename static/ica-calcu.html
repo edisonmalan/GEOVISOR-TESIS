@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Salida de Datos - Calculadora ICA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input {
+            width: 80%;
+            padding: 5px;
+            text-align: center;
+        }
+        .readonly {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        #calculateBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #calculateBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla de Salida de Datos - Calculadora ICA</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ítem</th>
+                <th>Parámetro</th>
+                <th>Valor del Parámetro</th>
+                <th>Factor de Ponderación (Wi)</th>
+                <th>Índice de Calidad (Sub-i)</th>
+                <th>Subi * Wi</th>
+                <th>Índice General de Calidad</th>
+                <th>Calidad del Agua</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Oxígeno Disuelto (mg/L)</td>
+                <td><input type="number" id="oxygen" placeholder="Valor"></td>
+                <td class="readonly">0.17</td>
+                <td id="oxygenIndex">-</td>
+                <td id="oxygenSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Coliformes Fecales (NMP/100mL)</td>
+                <td><input type="number" id="coliforms" placeholder="Valor"></td>
+                <td class="readonly">0.16</td>
+                <td id="coliformsIndex">-</td>
+                <td id="coliformsSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>pH</td>
+                <td><input type="number" id="ph" placeholder="Valor"></td>
+                <td class="readonly">0.11</td>
+                <td id="phIndex">-</td>
+                <td id="phSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>DBO5 (mg/L)</td>
+                <td><input type="number" id="bod" placeholder="Valor"></td>
+                <td class="readonly">0.11</td>
+                <td id="bodIndex">-</td>
+                <td id="bodSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Cambio de Temperatura (°C)</td>
+                <td><input type="number" id="temp" placeholder="Valor"></td>
+                <td class="readonly">0.10</td>
+                <td id="tempIndex">-</td>
+                <td id="tempSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Fosfatos (mg/L)</td>
+                <td><input type="number" id="phosphates" placeholder="Valor"></td>
+                <td class="readonly">0.43</td>
+                <td id="phosphatesIndex">-</td>
+                <td id="phosphatesSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Nitratos (mg/L)</td>
+                <td><input type="number" id="nitrates" placeholder="Valor"></td>
+                <td class="readonly">0.10</td>
+                <td id="nitratesIndex">-</td>
+                <td id="nitratesSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Turbidez (NTU)</td>
+                <td><input type="number" id="turbidity" placeholder="Valor"></td>
+                <td class="readonly">0.08</td>
+                <td id="turbidityIndex">-</td>
+                <td id="turbiditySubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>Sólidos Totales Disueltos (mg/L)</td>
+                <td><input type="number" id="tds" placeholder="Valor"></td>
+                <td class="readonly">0.07</td>
+                <td id="tdsIndex">-</td>
+                <td id="tdsSubiWi">-</td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5"><strong>Totales</strong></td>
+                <td id="generalIndex">-</td>
+                <td id="waterQuality">-</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button id="calculateBtn">Calcular</button>
+
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            // Aquí se implementará la lógica para calcular el Índice de Calidad
+            alert('Cálculo en proceso... (Falta implementar la lógica)');
+        });
+    </script>
+</body>
+</html>
