@@ -71,13 +71,11 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
-          <i class="hamburger align-self-center"></i>
-        </a>
+                    <i class="hamburger align-self-center"></i>
+                </a>
 
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
-						
-						
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                               <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Benito Mendoza" /> <span class="text-dark">Benito Mendoza</span>
@@ -199,19 +197,32 @@
         let users = [];
         let editingUserId = null;
 
-        const loadUsers = () => {
+        // Función para cargar los usuarios desde el backend
+        const loadUsers = async () => {
+            try {
+                const response = await fetch('/api/usuarios'); // Endpoint de tu backend
+                const data = await response.json();
+                users = data;
+                renderUserTable();
+            } catch (error) {
+                console.error('Error cargando usuarios:', error);
+            }
+        };
+
+        // Función para renderizar los usuarios en la tabla
+        const renderUserTable = () => {
             const tableBody = document.querySelector("#userTable tbody");
             tableBody.innerHTML = "";
             users.forEach((user, index) => {
                 const row = `
                     <tr>
-                        <td>${index + 1}</td>
+                        <td>${user.id}</td>
                         <td>${user.name}</td>
                         <td>${user.email}</td>
-                        <td>${user.password}</td>
+                        <td>******</td> <!-- Ocultar la contraseña -->
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="editUser(${index})">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${index})">Eliminar</button>
+                            <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Editar</button>
+                            <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${user.id})">Eliminar</button>
                         </td>
                     </tr>
                 `;
@@ -219,15 +230,26 @@
             });
         };
 
-        const saveUser = () => {
+        // Función para guardar un usuario (nuevo o editado)
+        const saveUser = async () => {
             const name = document.getElementById("userName").value;
             const email = document.getElementById("userEmail").value;
             const password = document.getElementById("userPassword").value;
 
+            const user = { name, email, password };
+
             if (editingUserId === null) {
-                users.push({ name, email, password });
+                await fetch('/api/usuarios', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user)
+                });
             } else {
-                users[editingUserId] = { name, email, password };
+                await fetch(`/api/usuarios/${editingUserId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user)
+                });
                 editingUserId = null;
             }
 
@@ -236,29 +258,34 @@
             bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
         };
 
-        const editUser = (index) => {
-            const user = users[index];
-            editingUserId = index;
+        // Función para editar un usuario
+        const editUser = async (id) => {
+            const response = await fetch(`/api/usuarios/${id}`);
+            const user = await response.json();
+            editingUserId = id;
             document.getElementById("userName").value = user.name;
             document.getElementById("userEmail").value = user.email;
             document.getElementById("userPassword").value = user.password;
             new bootstrap.Modal(document.getElementById("userModal")).show();
         };
 
-        const showDeleteModal = (index) => {
-            document.getElementById("confirmDelete").onclick = () => deleteUser(index);
+        // Función para mostrar el modal de eliminación
+        const showDeleteModal = (id) => {
+            document.getElementById("confirmDelete").onclick = () => deleteUser(id);
             new bootstrap.Modal(document.getElementById("deleteModal")).show();
         };
 
-        const deleteUser = (index) => {
-            users.splice(index, 1);
+        // Función para eliminar un usuario
+        const deleteUser = async (id) => {
+            await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
             loadUsers();
             bootstrap.Modal.getInstance(document.getElementById("deleteModal")).hide();
         };
 
         document.getElementById("saveUser").onclick = saveUser;
 
-        feather.replace();
+        // Cargar los usuarios al iniciar la página
+        loadUsers();
     </script>
 </body>
 
