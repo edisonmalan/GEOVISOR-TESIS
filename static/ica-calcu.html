@@ -1,178 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla de Salida de Datos - Calculadora ICA</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        input {
-            width: 80%;
-            padding: 5px;
-            text-align: center;
-        }
-        .readonly {
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        #calculateBtn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        #calculateBtn:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICA-NSF Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .total {
+      font-weight: bold;
+      background-color: #d4edda;
+    }
+  </style>
 </head>
 <body>
-    <h1>Tabla de Salida de Datos - Calculadora ICA</h1>
+  <h1>ICA-NSF Calculator</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Ítem</th>
-                <th>Parámetro</th>
-                <th>Valor del Parámetro</th>
-                <th>Factor de Ponderación (Wi)</th>
-                <th>Índice de Calidad (Sub-i)</th>
-                <th>Subi * Wi</th>
-                <th>Índice General de Calidad</th>
-                <th>Calidad del Agua</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Oxígeno Disuelto (mg/L)</td>
-                <td><input type="number" id="oxygen" placeholder="Valor"></td>
-                <td class="readonly">0.17</td>
-                <td id="oxygenIndex">-</td>
-                <td id="oxygenSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Coliformes Fecales (NMP/100mL)</td>
-                <td><input type="number" id="coliforms" placeholder="Valor"></td>
-                <td class="readonly">0.16</td>
-                <td id="coliformsIndex">-</td>
-                <td id="coliformsSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>pH</td>
-                <td><input type="number" id="ph" placeholder="Valor"></td>
-                <td class="readonly">0.11</td>
-                <td id="phIndex">-</td>
-                <td id="phSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>DBO5 (mg/L)</td>
-                <td><input type="number" id="bod" placeholder="Valor"></td>
-                <td class="readonly">0.11</td>
-                <td id="bodIndex">-</td>
-                <td id="bodSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Cambio de Temperatura (°C)</td>
-                <td><input type="number" id="temp" placeholder="Valor"></td>
-                <td class="readonly">0.10</td>
-                <td id="tempIndex">-</td>
-                <td id="tempSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Fosfatos (mg/L)</td>
-                <td><input type="number" id="phosphates" placeholder="Valor"></td>
-                <td class="readonly">0.43</td>
-                <td id="phosphatesIndex">-</td>
-                <td id="phosphatesSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Nitratos (mg/L)</td>
-                <td><input type="number" id="nitrates" placeholder="Valor"></td>
-                <td class="readonly">0.10</td>
-                <td id="nitratesIndex">-</td>
-                <td id="nitratesSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>Turbidez (NTU)</td>
-                <td><input type="number" id="turbidity" placeholder="Valor"></td>
-                <td class="readonly">0.08</td>
-                <td id="turbidityIndex">-</td>
-                <td id="turbiditySubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>Sólidos Totales Disueltos (mg/L)</td>
-                <td><input type="number" id="tds" placeholder="Valor"></td>
-                <td class="readonly">0.07</td>
-                <td id="tdsIndex">-</td>
-                <td id="tdsSubiWi">-</td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5"><strong>Totales</strong></td>
-                <td id="generalIndex">-</td>
-                <td id="waterQuality">-</td>
-            </tr>
-        </tfoot>
-    </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Parámetro</th>
+        <th>Valor del Parámetro</th>
+        <th>Factor de Ponderación (Wi)</th>
+        <th>Índice de Calidad (Sub-i)</th>
+        <th>Sub-i * Wi</th>
+      </tr>
+    </thead>
+    <tbody id="parameterTable">
+      <!-- Table rows will be dynamically generated -->
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="total">Índice General de Calidad del Agua</td>
+        <td id="totalQualityIndex" class="total">0</td>
+      </tr>
+    </tfoot>
+  </table>
 
-    <button id="calculateBtn">Calcular</button>
+  <script>
+    // Parámetros y factores de ponderación
+    const parameters = [
+      { name: "Oxígeno disuelto", wi: 0.17 },
+      { name: "Coliformes fecales", wi: 0.16 },
+      { name: "pH", wi: 0.11 },
+      { name: "DBO5", wi: 0.11 },
+      { name: "Cambio de temperatura", wi: 0.10 },
+      { name: "Fosfato", wi: 0.10 },
+      { name: "Nitratos", wi: 0.10 },
+      { name: "Turbidez", wi: 0.08 },
+      { name: "TSD", wi: 0.07 },
+    ];
 
-    <script>
-        document.getElementById('calculateBtn').addEventListener('click', function() {
-            // Aquí se implementará la lógica para calcular el Índice de Calidad
-            alert('Cálculo en proceso... (Falta implementar la lógica)');
-        });
-    </script>
+    // Lógica para calcular Sub-i basado en fórmulas específicas
+    function calculateSubIndex(parameterName, value) {
+      switch (parameterName) {
+        case "Oxígeno disuelto":
+          if (value >= 0 && value <= 40) {
+            return 0.009 * Math.pow(value, 2) + 0.2818 * value + 2.9658;
+          } else if (value > 40 && value <= 70) {
+            return 0.0109 * Math.pow(value, 2) + 0.264 * value + 2.6985;
+          } else if (value > 70 && value <= 99) {
+            return -0.0184 * Math.pow(value, 2) + 3.9434 * value - 111.16;
+          } else if (value > 99 && value <= 140) {
+            return -0.0034 * Math.pow(value, 2) + 0.2622 * value + 107.16;
+          } else if (value > 140) {
+            return 50;
+          } else {
+            return 0;
+          }
+        case "Coliformes fecales":
+          if (value === 0) {
+            return 99;
+          } else if (value > 0 && value <= 100) {
+            return 105.58 * Math.pow(value, -0.183);
+          } else if (value > 100 && value <= 100000) {
+            return 275.18 * Math.pow(value, -0.36);
+          } else if (value > 100000) {
+            return 2;
+          } else {
+            return 0;
+          }
+        case "pH":
+          if (value < 2 || value > 12) {
+            return 0;
+          } else if (value >= 2 && value < 4.1) {
+            return 1.3598 * Math.pow(value, 2) - 4.577 * value + 5.6962;
+          } else if (value >= 4.1 && value < 5.6) {
+            return 8.1141 * Math.pow(value, 2) - 55.612 * value + 101.49;
+          } else if (value >= 5.6 && value < 6.8) {
+            return 7.9365 * Math.pow(value, 2) - 65.746 * value + 163.32;
+          } else if (value >= 6.8 && value < 8.3) {
+            return -25.965 * Math.pow(value, 2) + 385.38 * value - 1337;
+          } else if (value >= 8.3 && value < 9.2) {
+            return 11.111 * Math.pow(value, 2) - 225.11 * value + 1176.3;
+          } else if (value >= 9.2 && value < 10.4) {
+            return 14.286 * Math.pow(value, 2) - 307.33 * value + 1664.9;
+          } else if (value >= 10.4 && value <= 12) {
+            return 2.9428 * Math.pow(value, 2) - 72.69 * value + 451.7;
+          } else {
+            return 0;
+          }
+        case "DBO5":
+          if (value >= 0 && value <= 2) {
+            return -2.3209 * Math.pow(value, 3) + 1.8688 * Math.pow(value, 2) - 4.4367 * value + 100;
+          } else if (value > 2 && value <= 4) {
+            return -4.3933 * Math.pow(value, 3) + 43.187 * Math.pow(value, 2) - 145.71 * value + 233.85;
+          } else if (value > 4 && value <= 30) {
+            return -0.0024 * Math.pow(value, 3) + 0.2218 * Math.pow(value, 2) - 7.2164 * value + 86.605;
+          } else if (value > 30) {
+            return 2;
+          } else {
+            return 0;
+          }
+        case "Cambio de temperatura":
+          if (value >= -5 && value < -2.5) {
+            return 8 * value + 95;
+          } else if (value >= -2.5 && value < 0) {
+            return 7.2 * value + 93;
+          } else if (value >= 0 && value < 2.5) {
+            return -8 * value + 93;
+          } else if (value >= 2.5 && value < 5) {
+            return -11.4 * value + 101.5;
+          } else if (value >= 5 && value < 7.5) {
+            return -6.6 * value + 77.5;
+          } else if (value >= 7.5 && value < 10) {
+            return -2.8 * value + 49;
+          } else if (value >= 10 && value < 12.5) {
+            return -1.4 * value + 35;
+          } else if (value >= 12.5 && value <= 15) {
+            return -3.2 * value + 57.5;
+          } else {
+            return 0;
+          }
+        case "Fosfato":
+          if (value >= 0 && value <= 0.5) {
+            return 176.28 * Math.pow(value, 3) - 237.56 * Math.pow(value, 2) - 4.8952 * value + 99.724;
+          } else if (value > 0.5 && value <= 1.75) {
+            return 19.003 * Math.pow(value, 2) - 66.857 * value + 88.179;
+          } else if (value > 1.75 && value <= 10) {
+            return 0.4329 * Math.pow(value, 2) - 7.6534 * value + 40.586;
+          } else if (value > 10) {
+            return 2;
+          } else {
+            return 0;
+          }
+        case "Nitratos":
+          if (value >= 0 && value <= 4) {
+            return -1.1036 * Math.pow(value, 3) + 3.5884 * Math.pow(value, 2) - 3.617 * value + 97.015;
+          } else if (value > 4 && value <= 22) {
+            return -0.0069 * Math.pow(value, 3) + 0.356 * Math.pow(value, 2) - 7.1307 * value + 93.072;
+          } else if (value > 22 && value <= 50) {
+            return 0.0057 * Math.pow(value, 3) - 1.3005 * Math.pow(value, 2) + 60.915 * value;
+          } else if (value > 50 && value <= 100) {
+            return 0.0034 * Math.pow(value, 2) - 0.6331 * value + 32.832;
+          } else if (value > 100) {
+            return 1;
+          } else {
+            return 0;
+          }
+        case "Turbidez":
+          if (value >= 0 && value <= 20) {
+            return 0.0402 * Math.pow(value, 2) - 2.6873 * value + 98.621;
+          } else if (value > 20 && value <= 80) {
+            return 0.0047 * Math.pow(value, 2) - 1.0732 * value + 80.741;
+          } else if (value > 80 && value <= 100) {
+            return -0.0045 * Math.pow(value, 2) + 0.4075 * value + 21.5;
+          } else if (value > 100) {
+            return 5;
+          } else {
+            return 0;
+          }
+        case "TSD":
+          if (value >= 0 && value <= 65) {
+            return -0.0021 * Math.pow(value, 2) + 0.2534 * value + 79.272;
+          } else if (value > 65 && value <= 210) {
+            return -0.0003 * Math.pow(value, 2) - 0.0344 * value + 89.553;
+          } else if (value > 210 && value <= 450) {
+            return -0.1302 * value + 98.561;
+          } else if (value > 450 && value <= 500) {
+            return -0.1818 * value + 121.95;
+          } else if (value > 500) {
+            return 20;
+          } else {
+            return 0;
+          }
+        default:
+          return 0;
+      }
+    }
+
+    // Generar filas de la tabla
+    function generateTable() {
+      const tableBody = document.getElementById("parameterTable");
+      tableBody.innerHTML = ""; // Limpiar la tabla
+
+      parameters.forEach((param, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${param.name}</td>
+          <td><input type="number" id="value-${index}" value="0" onchange="updateTable()"></td>
+          <td>${param.wi.toFixed(2)}</td>
+          <td id="subIndex-${index}">0</td>
+          <td id="subWi-${index}">0</td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Actualizar cálculos en la tabla
+    function updateTable() {
+      let totalQuality = 0;
+
+      parameters.forEach((param, index) => {
+        const value = parseFloat(document.getElementById(`value-${index}`).value) || 0;
+        const subIndex = Math.round(calculateSubIndex(param.name, value)); // Convertir a entero
+        const subWi = subIndex * param.wi;
+
+        document.getElementById(`subIndex-${index}`).innerText = subIndex;
+        document.getElementById(`subWi-${index}`).innerText = subWi.toFixed(2);
+
+        totalQuality += subWi;
+      });
+
+      document.getElementById("totalQualityIndex").innerText = Math.round(totalQuality); // Convertir a entero
+    }
+
+    // Inicializar la tabla al cargar la página
+    generateTable();
+  </script>
 </body>
 </html>

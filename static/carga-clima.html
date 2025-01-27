@@ -104,10 +104,11 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3"><strong>Carga de Datos Climáticos</strong></h1>
+					
 
 					<div class="card shadow-sm">
 						<div class="card-header bg-primary text-white">
-							
+							Formulario de Carga
 						</div>
 						<div class="card-body">
 							<form id="uploadForm" enctype="multipart/form-data" class="needs-validation" novalidate>
@@ -127,6 +128,8 @@
 									<input type="file" id="file" name="file" class="form-control" accept=".csv, .xlsx" required>
 									<div class="invalid-feedback">Por favor, selecciona un archivo.</div>
 								</div>
+
+								<input type="hidden" name="tableName" value="datosclima">
 
 								<div class="d-grid">
 									<button type="submit" class="btn btn-primary">Subir</button>
@@ -183,9 +186,14 @@
 				}
 
 				const formData = new FormData(form);
+				const regionId = formData.get("regionId");
+				if (!regionId) {
+					alert("Por favor selecciona una región antes de cargar los datos.");
+					return;
+				}
 
 				$.ajax({
-					url: "/upload",
+					url: "/upload-codigo2",
 					type: "POST",
 					data: formData,
 					contentType: false,
@@ -194,7 +202,7 @@
 						alert(response.message);
 					},
 					error: function (err) {
-						alert("Error al procesar los datos.");
+						alert("Error al procesar los datos: " + (err.responseJSON?.message || "Error desconocido."));
 					},
 				});
 			});
