@@ -61,7 +61,7 @@
 							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Usuarios</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
+                    <li class="sidebar-item">
 						<a class="sidebar-link" href="edicion-datos.html">
               <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Edición de datos</span>
             </a>
@@ -103,42 +103,94 @@
 			</nav>
 
 			<main class="content">
-				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Carga de Datos Climáticos</strong></h1>
-					
+				<div class="container mt-4">
+                    <h2 class="mb-4">Gestión de Datos</h2>
+                    
+                    <!-- Botones para ver datos -->
+                    <div class="mb-3">
+                        <button onclick="abrirDatos('ica')">Ver Datos ICA</button>
+                        <button onclick="abrirDatos('clima')">Ver Datos Clima</button>
+                        <script>
+                        function abrirDatos(tipo) {
+                            window.open(`datos.html?tipo=${tipo}`, '_blank');  // Se abre en una nueva pestaña
+                            }
+                            </script>
 
-					<div class="card shadow-sm">
-						<div class="card-header bg-primary text-white">
-							Formulario de Carga
-						</div>
-						<div class="card-body">
-							<form id="uploadForm" enctype="multipart/form-data" class="needs-validation" novalidate>
-								<div class="mb-3">
-									<label for="region" class="form-label">Selecciona una región:</label>
-									<select id="region" name="regionId" class="form-select" required>
-										<option value="" selected disabled>-- Selecciona una región --</option>
-										<option value="1">Chimborazo</option>
-										<option value="2">Tungurahua</option>
-										<option value="3">Bolívar</option>
-									</select>
-									<div class="invalid-feedback">Por favor, selecciona una región.</div>
-								</div>
 
-								<div class="mb-3">
-									<label for="file" class="form-label">Sube un archivo:</label>
-									<input type="file" id="file" name="file" class="form-control" accept=".csv, .xlsx" required>
-									<div class="invalid-feedback">Por favor, selecciona un archivo.</div>
-								</div>
+                    </div>
+                    
+                    <!-- Sección de eliminación de datos -->
+                    <div class="card p-3">
+                        <h4>Eliminar Datos</h4>
+                        
+                        <!-- Eliminar por ID -->
+                        <div class="mb-3">
+                            <label for="idRegistro" class="form-label">ID del Registro:</label>
+                            <input type="text" id="idRegistro" class="form-control" placeholder="Ingrese el ID">
+                            <div class="mt-2">
+                                <button class="btn btn-danger me-2" onclick="eliminarPorId('ica')">Eliminar en ICA</button>
+                                <button class="btn btn-danger" onclick="eliminarPorId('clima')">Eliminar en Clima</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Eliminar por Rango de Fechas -->
+                        <div class="mb-3">
+                            <label class="form-label">Eliminar por Rango de Fechas:</label>
+                            <div class="d-flex">
+                                <input type="date" id="fechaInicio" class="form-control me-2">
+                                <input type="date" id="fechaFin" class="form-control">
+                            </div>
+                            <div class="mt-2">
+                                <button class="btn btn-warning me-2" onclick="eliminarPorFecha('ica')">Eliminar en ICA</button>
+                                <button class="btn btn-warning" onclick="eliminarPorFecha('clima')">Eliminar en Clima</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    function verDatos(tabla) {
+                        window.location.href = `datos.html?tabla=${tabla}`;
+                    }
+                    
+                    function eliminarPorId(tabla) {
+    const id = document.getElementById('idRegistro').value;
+    if (id && confirm(`¿Está seguro de eliminar el registro ID ${id} en ${tabla}?`)) {
+        // Realizar la petición AJAX para eliminar el registro
+        $.ajax({
+            url: `/api/datos/${tabla}/${id}`,
+            type: 'DELETE',
+            success: function(response) {
+                alert(response.message);
+                // Opcional: recargar la página o actualizar la tabla de datos
+            },
+            error: function(err) {
+                alert("Error al eliminar el registro: " + (err.responseJSON?.message || "Error desconocido."));
+            }
+        });
+    }
+}
 
-								<input type="hidden" name="tableName" value="datosclima">
+function eliminarPorFecha(tabla) {
+    const inicio = document.getElementById('fechaInicio').value;
+    const fin = document.getElementById('fechaFin').value;
+    if (inicio && fin && confirm(`¿Eliminar registros entre ${inicio} y ${fin} en ${tabla}?`)) {
+        // Realizar la petición AJAX para eliminar registros por rango de fechas
+        $.ajax({
+            url: `/api/datos/${tabla}?inicio=${inicio}&fin=${fin}`,
+            type: 'DELETE',
+            success: function(response) {
+                alert(response.message);
+            },
+            error: function(err) {
+                alert("Error al eliminar los registros: " + (err.responseJSON?.message || "Error desconocido."));
+            }
+        });
+    }
+}
 
-								<div class="d-grid">
-									<button type="submit" class="btn btn-primary">Subir</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+                </script>
+                
 			</main>
 
 			<footer class="footer">
@@ -146,25 +198,10 @@
 					<div class="row text-muted">
 						<div class="col-6 text-start">
 							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> - <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Bootstrap Admin Template</strong></a> &copy;
+								<a class="text-muted" href="index.html" target="_blank"><strong>Geovisor</strong>						
 							</p>
 						</div>
-						<div class="col-6 text-end">
-							<ul class="list-inline">
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
-								</li>
-							</ul>
-						</div>
+						
 					</div>
 				</div>
 			</footer>

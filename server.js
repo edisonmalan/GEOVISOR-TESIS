@@ -142,7 +142,6 @@ app.post('/login', async (req, res) => {
 });
 
 
-// ** Integración de la API para obtener los datos de ICA ** //
 
 // Nueva ruta para obtener los datos de la tabla ICA
 app.get('/get-ica-data', async (req, res) => {
@@ -171,6 +170,96 @@ app.get('/get-ica-data', async (req, res) => {
     res.status(500).json({ message: "Error al obtener los datos de ICA" });
   }
 });
+
+// ----------------------------------------
+// API para obtener todos los datos de la tabla ICA
+// ----------------------------------------
+app.get('/api/datos/ica', async (req, res) => {
+  try {
+    // Consulta para obtener todos los registros de la tabla ICA
+    const result = await pool.query(`SELECT * FROM datosgeovisor.ica`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de ICA:', error);
+    res.status(500).json({ message: 'Error al obtener datos de ICA' });
+  }
+});
+
+// Eliminar un registro de DatosClima por ID
+app.delete('/api/datos/ica/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    await pool.query(`DELETE FROM datosgeovisor.ica WHERE id_ica = $1`, [id]);
+    res.json({ message: `Registro ica con ID ${id} eliminado correctamente.` });
+  } catch (error) {
+    console.error("Error al eliminar registro ica:", error);
+    res.status(500).json({ message: "Error al eliminar registro ica." });
+  }
+});
+
+// ----------------------------------------
+// API para obtener todos los datos de la tabla DatosClima
+// ----------------------------------------
+app.get('/api/datos/clima', async (req, res) => {
+  try {
+    // Consulta para obtener todos los registros de la tabla DatosClima
+    const result = await pool.query(`SELECT * FROM datosgeovisor.datosclima`);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de Clima:', error);
+    res.status(500).json({ message: 'Error al obtener datos de Clima' });
+  }
+});
+// Eliminar un registro de DatosClima por ID
+app.delete('/api/datos/clima/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    await pool.query(`DELETE FROM datosgeovisor.datosclima WHERE id_datosclima = $1`, [id]);
+    res.json({ message: `Registro Clima con ID ${id} eliminado correctamente.` });
+  } catch (error) {
+    console.error("Error al eliminar registro Clima:", error);
+    res.status(500).json({ message: "Error al eliminar registro Clima." });
+  }
+});
+
+// ----- Eliminación por Rango de Fechas -----
+
+// Eliminar registros de ICA por rango de fecha de registro
+app.delete('/api/datos/ica', async (req, res) => {
+  const { inicio, fin } = req.query;
+  if (!inicio || !fin) {
+    return res.status(400).json({ message: 'Debe proporcionar fechas de inicio y fin.' });
+  }
+  try {
+    await pool.query(
+      `DELETE FROM datosgeovisor.ica WHERE fecha_registro BETWEEN $1 AND $2`,
+      [inicio, fin]
+    );
+    res.json({ message: `Registros ICA eliminados entre ${inicio} y ${fin}.` });
+  } catch (error) {
+    console.error("Error al eliminar registros ICA por rango de fecha:", error);
+    res.status(500).json({ message: "Error al eliminar registros ICA por rango de fecha." });
+  }
+});
+
+// Eliminar registros de DatosClima por rango de fecha de registro
+app.delete('/api/datos/clima', async (req, res) => {
+  const { inicio, fin } = req.query;
+  if (!inicio || !fin) {
+    return res.status(400).json({ message: 'Debe proporcionar fechas de inicio y fin.' });
+  }
+  try {
+    await pool.query(
+      `DELETE FROM datosgeovisor.datosclima WHERE fecha_registro BETWEEN $1 AND $2`,
+      [inicio, fin]
+    );
+    res.json({ message: `Registros de Clima eliminados entre ${inicio} y ${fin}.` });
+  } catch (error) {
+    console.error("Error al eliminar registros de Clima por rango de fecha:", error);
+    res.status(500).json({ message: "Error al eliminar registros de Clima por rango de fecha." });
+  }
+});
+
 
 
 

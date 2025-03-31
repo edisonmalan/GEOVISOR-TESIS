@@ -2,84 +2,92 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Responsive Admin & Dashboard Template based on Bootstrap 5">
-    <meta name="author" content="AdminKit">
-    <title>CRUD de Usuarios</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/app.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-    <style>
-        .modal-dialog-centered {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
 
-        .modal {
-            z-index: 1055 !important;
-        }
+	<title>Administrador - Carga de Datos</title>
 
-        .modal-backdrop {
-            z-index: 1050 !important;
-        }
-    </style>
+	<link href="css/app.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">Administrador</span>
-                </a>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">Pages</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="admin-dashboard.html">
-                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Inicio</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="carga-datos.html">
-                            <i class="align-middle" data-feather="book"></i> <span class="align-middle">Carga de datos</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="crud-usuarios.html">
-                            <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Usuarios</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="index.html">
-                            <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Cerrar Sesión</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+	<div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="admin-dashboard.html">
+					<span class="align-middle">Administrador</span>
+				</a>
 
-        <!-- Main -->
-        <div class="main">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">Pages</li>
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="admin-dashboard.html">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Inicio</span>
+						</a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link collapsed" data-bs-toggle="collapse" href="#cargadatos-menu" role="button" aria-expanded="false" aria-controls="cargadatos-menu">
+							<i class="align-middle" data-feather="server"></i> <span class="align-middle">Carga de Datos</span>
+						</a>
+						<ul class="sidebar-dropdown list-unstyled collapse" id="cargadatos-menu">
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="carga-ica-bloques.html">
+									<i class="align-middle" data-feather="play"></i> <span class="align-middle">ICA y Bloques</span>
+								</a>
+							</li>
+							<li class="sidebar-item">
+								<a class="sidebar-link" href="carga-clima.html">
+									<i class="align-middle" data-feather="play"></i> <span class="align-middle">Clima</span>
+								</a>
+							</li>
+							
+						</ul>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="crud-usuarios.html">
+							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Usuarios</span>
+						</a>
+					</li>
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="edicion-datos.html">
+              <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Edición de datos</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="index.html">
+							<i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Cerrar Sesión</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle js-sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
+					<i class="hamburger align-self-center"></i>
+				</a>
 
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                              <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Benito Mendoza" /> <span class="text-dark">Benito Mendoza</span>
-                           </a>
+								<img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Benito Mendoza" /> <span class="text-dark">Benito Mendoza</span>
+							</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
@@ -94,199 +102,63 @@
 				</div>
 			</nav>
 
-            <!-- Content -->
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <h1 class="h3 mb-3">Gestión de Usuarios</h1>
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Lista de Usuarios</h5>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">Agregar Usuario</button>
-                        </div>
-                        <div class="card-body">
-                            <table class="table table-striped" id="userTable">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nombre</th>
-                                        <th>Email</th>
-                                        <th>Contraseña</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Usuarios se cargarán dinámicamente -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </main>
+			<main class="content">
+				
+			</main>
 
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row text-muted">
-                        <div class="col-6 text-start">
-                            <p class="mb-0"><a class="text-muted" href="#"><strong>AdminKit</strong></a> &copy;</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="index.html" target="_blank"><strong>Geovisor</strong>						
+							</p>
+						</div>
+						
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
 
-    <!-- Modal para Agregar/Editar -->
-    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">Agregar Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="userForm">
-                        <input type="hidden" id="userId">
-                        <div class="mb-3">
-                            <label for="userName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="userName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="userEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="userEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="userPassword" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="userPassword" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="saveUser">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<script src="js/app.js"></script>
 
-    <!-- Modal de Confirmación de Eliminación -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>¿Estás seguro de que deseas eliminar este usuario?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<script>
+		(function () {
+			"use strict";
+			const form = document.querySelector("#uploadForm");
 
-    <!-- Feather Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Script CRUD -->
-    <script>
-        let users = [];
-        let editingUserId = null;
+			form.addEventListener("submit", function (e) {
+				e.preventDefault();
 
-        // Función para cargar los usuarios desde el backend
-        const loadUsers = async () => {
-            try {
-                const response = await fetch('/api/usuarios'); // Endpoint de tu backend
-                const data = await response.json();
-                users = data;
-                renderUserTable();
-            } catch (error) {
-                console.error('Error cargando usuarios:', error);
-            }
-        };
+				if (!form.checkValidity()) {
+					form.classList.add("was-validated");
+					return;
+				}
 
-        // Función para renderizar los usuarios en la tabla
-        const renderUserTable = () => {
-            const tableBody = document.querySelector("#userTable tbody");
-            tableBody.innerHTML = "";
-            users.forEach((user, index) => {
-                const row = `
-                    <tr>
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>******</td> <!-- Ocultar la contraseña -->
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${user.id})">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-        };
+				const formData = new FormData(form);
+				const regionId = formData.get("regionId");
+				if (!regionId) {
+					alert("Por favor selecciona una región antes de cargar los datos.");
+					return;
+				}
 
-        // Función para guardar un usuario (nuevo o editado)
-        const saveUser = async () => {
-            const name = document.getElementById("userName").value;
-            const email = document.getElementById("userEmail").value;
-            const password = document.getElementById("userPassword").value;
-
-            const user = { name, email, password };
-
-            if (editingUserId === null) {
-                await fetch('/api/usuarios', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(user)
-                });
-            } else {
-                await fetch(`/api/usuarios/${editingUserId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(user)
-                });
-                editingUserId = null;
-            }
-
-            document.getElementById("userForm").reset();
-            loadUsers();
-            bootstrap.Modal.getInstance(document.getElementById("userModal")).hide();
-        };
-
-        // Función para editar un usuario
-        const editUser = async (id) => {
-            const response = await fetch(`/api/usuarios/${id}`);
-            const user = await response.json();
-            editingUserId = id;
-            document.getElementById("userName").value = user.name;
-            document.getElementById("userEmail").value = user.email;
-            document.getElementById("userPassword").value = user.password;
-            new bootstrap.Modal(document.getElementById("userModal")).show();
-        };
-
-        // Función para mostrar el modal de eliminación
-        const showDeleteModal = (id) => {
-            document.getElementById("confirmDelete").onclick = () => deleteUser(id);
-            new bootstrap.Modal(document.getElementById("deleteModal")).show();
-        };
-
-        // Función para eliminar un usuario
-        const deleteUser = async (id) => {
-            await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
-            loadUsers();
-            bootstrap.Modal.getInstance(document.getElementById("deleteModal")).hide();
-        };
-
-        document.getElementById("saveUser").onclick = saveUser;
-
-        // Cargar los usuarios al iniciar la página
-        loadUsers();
-    </script>
+				$.ajax({
+					url: "/upload-codigo2",
+					type: "POST",
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function (response) {
+						alert(response.message);
+					},
+					error: function (err) {
+						alert("Error al procesar los datos: " + (err.responseJSON?.message || "Error desconocido."));
+					},
+				});
+			});
+		})();
+	</script>
 </body>
 
 </html>

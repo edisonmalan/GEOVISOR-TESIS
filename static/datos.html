@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos</title>
+    <link href="css/app.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2 id="titulo-datos">Cargando datos...</h2>
+    <table border="1">
+        <thead id="tablaHead"></thead>
+        <tbody id="tablaBody"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener el tipo de datos desde la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const tipo = urlParams.get('tipo');
+
+            if (!tipo) {
+                document.getElementById("titulo-datos").textContent = "Error: Tipo de datos no especificado";
+                return;
+            }
+
+            let apiUrl = tipo === 'ica' ? "/api/datos/ica" : "/api/datos/clima";
+            let tituloPagina = tipo === 'ica' ? "Datos de ICA" : "Datos de Clima";
+
+            document.getElementById("titulo-datos").textContent = tituloPagina;
+
+            // Obtener los datos de la API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(datos => {
+                    let tablaHead = document.getElementById("tablaHead");
+                    let tablaBody = document.getElementById("tablaBody");
+
+                    if (datos.length === 0) {
+                        tablaBody.innerHTML = "<tr><td colspan='100%'>No hay datos disponibles</td></tr>";
+                        return;
+                    }
+
+                    // Crear encabezados de la tabla
+                    let headers = Object.keys(datos[0]);
+                    tablaHead.innerHTML = "<tr>" + headers.map(col => `<th>${col}</th>`).join("") + "</tr>";
+
+                    // Llenar los datos en la tabla
+                    tablaBody.innerHTML = datos.map(dato => 
+                        "<tr>" + headers.map(col => `<td>${dato[col]}</td>`).join("") + "</tr>"
+                    ).join("");
+                })
+                .catch(error => {
+                    console.error("Error al obtener los datos:", error);
+                    document.getElementById("titulo-datos").textContent = "Error al cargar los datos";
+                });
+        });
+    </script>
+</body>
+</html>
