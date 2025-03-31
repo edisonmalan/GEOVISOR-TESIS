@@ -268,3 +268,33 @@ ul#section-menu li, ul.submenu li {
     }
 }
 
+/* POP DEL MODAL PARA EL ICA */
+
+/* Estilo para la tabla */
+.popup-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* Estilos para las celdas de la tabla */
+.popup-table th, .popup-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Estilos para las cabeceras */
+.popup-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    position: sticky; /* Hace que el encabezado sea fijo */
+    top: 0; /* Lo fija en la parte superior del contenedor */
+    z-index: 1; /* Asegura que se quede encima de las filas */
+}
+
+/* Contenedor con barra deslizante */
+.popup-table-container {
+    max-height: 300px; /* Ajusta el tamaño según sea necesario */
+    overflow-y: auto; /* Activa la barra de desplazamiento vertical */
+}

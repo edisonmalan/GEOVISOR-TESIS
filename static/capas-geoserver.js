@@ -27,6 +27,7 @@ var bolivarLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Provincias/w
     crs: L.CRS.EPSG3857,
     zIndex: 1000
 });
+
 // CAPAS GEOSERVER DE CANTONES CHIMBORAZO
 
 var canton1chimborazoLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Cantones/wms", {

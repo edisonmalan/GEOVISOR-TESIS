@@ -141,6 +141,39 @@ app.post('/login', async (req, res) => {
   }
 });
 
+
+// ** Integración de la API para obtener los datos de ICA ** //
+
+// Nueva ruta para obtener los datos de la tabla ICA
+app.get('/get-ica-data', async (req, res) => {
+  const regionId = req.query.regionId; // Obtener el ID de provincia de la consulta
+
+  if (!regionId) {
+    return res.status(400).json({ message: 'ID de provincia no proporcionado' });
+  }
+
+  try {
+    // Realizar la consulta a la base de datos para obtener los datos de ICA
+    const result = await pool.query(`
+      SELECT "%OD ()", "Coliformes fecales (NMP/100 mL)", "pH", "DBO5 (mg O2/L)", "Cambio de Temp ºC", "Fosfatos (mg/L)", "Nitratos (mg/L)", "Turbidez (NTU)", "TDS (mg/L)","valor_ica"
+      FROM datosgeovisor.ica
+      WHERE id_region = $1
+    `, [regionId]);
+
+    // Si se encuentran resultados, devolverlos como respuesta en formato JSON
+    if (result.rows.length > 0) {
+      res.json(result.rows);
+    } else {
+      res.json([]); // Si no se encuentran datos, devolver un array vacío
+    }
+  } catch (error) {
+    console.error("Error al obtener los datos de ICA:", error);
+    res.status(500).json({ message: "Error al obtener los datos de ICA" });
+  }
+});
+
+
+
 // Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Aplicación corriendo en http://localhost:${PORT}/`);

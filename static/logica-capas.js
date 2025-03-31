@@ -1,25 +1,219 @@
  // Lógica para activar/desactivar las capas de Provincias 
- document.getElementById('chimborazo').onchange = function () {
+ var puntosChimborazoGeoJSON = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "nombre": "Chimborazo",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/6/60/Chimborazo_from_southwest.jpg",
+            "regionId": 1
+            },
+            "geometry": {
+                "coordinates": [-78.654, -1.664], // Coordenadas de Chimborazo
+                "type": "Point"
+            }
+        }
+    ]
+};
+
+// Crear la capa GeoJSON (pero sin agregarla aún al mapa)
+var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
+    onEachFeature: function (feature, layer) {
+        var contenidoPopup =  "<b>" + feature.properties.nombre + "</b>";
+
+        // Realizar una solicitud a la API backend para obtener los datos de la provincia
+        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    // Crear una tabla HTML con los datos de la provincia
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+
+                    // Recorrer los datos de la tabla ica y agregar las filas a la tabla
+                    data.forEach(row => {
+                        tabla += `<tr>
+                            <td>${row["%OD ()"]}</td>
+                            <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
+                            <td>${row["pH"]}</td>
+                            <td>${row["DBO5 (mg O2/L)"]}</td>
+                            <td>${row["Cambio de Temp ºC"]}</td>
+                            <td>${row["Fosfatos (mg/L)"]}</td>
+                            <td>${row["Nitratos (mg/L)"]}</td>
+                            <td>${row["Turbidez (NTU)"]}</td>
+                            <td>${row["TDS (mg/L)"]}</td>
+                            <td>${row["valor_ica"]}</td>
+                        </tr>`;
+                    });
+                    tabla += "</table>";
+
+                    // Agregar la tabla a la ventana emergente (popup)
+                    contenidoPopup += tabla;
+                    layer.bindPopup(contenidoPopup);
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener los datos de ICA:", error);
+                layer.bindPopup("Error al cargar los datos de ICA.");
+            });
+    }
+});
+
+document.getElementById('chimborazo').onchange = function () {
     if (this.checked) {
         map.addLayer(chimborazoLayer);
+        map.addLayer(marcadorChimborazo);
     } else {
+        map.removeLayer(marcadorChimborazo);
         map.removeLayer(chimborazoLayer);
     }
 };
+
+///////////////////////////////////////////////////
+
+// Lógica para activar/desactivar las capas de Provincias
+
+// GeoJSON de Tungurahua
+var puntosTungurahuaGeoJSON = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "nombre": "Tungurahua",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Volc%C3%A1n_Tungurahua.jpg/640px-Volc%C3%A1n_Tungurahua.jpg",
+                "regionId": 2 // ID para Tungurahua
+            },
+            "geometry": {
+                "coordinates": [-78.442, -1.467], // Coordenadas del volcán Tungurahua
+                "type": "Point"
+            }
+        }
+    ]
+};
+
+// Crear la capa GeoJSON de Tungurahua
+var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
+    onEachFeature: function (feature, layer) {
+        var contenidoPopup = 
+                             "<b>" + feature.properties.nombre + "</b>";
+
+        // Solicitar los datos de ICA para Tungurahua
+        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    data.forEach(row => {
+                        tabla += `<tr>
+                            <td>${row["%OD ()"]}</td>
+                            <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
+                            <td>${row["pH"]}</td>
+                            <td>${row["DBO5 (mg O2/L)"]}</td>
+                            <td>${row["Cambio de Temp ºC"]}</td>
+                            <td>${row["Fosfatos (mg/L)"]}</td>
+                            <td>${row["Nitratos (mg/L)"]}</td>
+                            <td>${row["Turbidez (NTU)"]}</td>
+                            <td>${row["TDS (mg/L)"]}</td>
+                            <td>${row["valor_ica"]}</td>
+                        </tr>`;
+                    });
+                    tabla += "</table></div>";
+                    contenidoPopup += tabla;
+                    layer.bindPopup(contenidoPopup);
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener los datos de ICA:", error);
+                layer.bindPopup("Error al cargar los datos de ICA.");
+            });
+    }
+});
+
+// Lógica para activar/desactivar la capa de Tungurahua
 document.getElementById('tungurahua').onchange = function () {
     if (this.checked) {
         map.addLayer(tungurahuaLayer);
+        map.addLayer(marcadorTungurahua);
     } else {
+        map.removeLayer(marcadorTungurahua);
         map.removeLayer(tungurahuaLayer);
     }
 };
+
+// GeoJSON de Bolívar
+var puntosBolivarGeoJSON = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "nombre": "Bolívar",
+                "imagen": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Guaranda.JPG/640px-Guaranda.JPG",
+                "regionId": 3 // ID para Bolívar
+            },
+            "geometry": {
+                "coordinates": [-79.000, -1.600], // Coordenadas de Guaranda, Bolívar
+                "type": "Point"
+            }
+        }
+    ]
+};
+
+// Crear la capa GeoJSON de Bolívar
+var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
+    onEachFeature: function (feature, layer) {
+        var contenidoPopup = 
+                             "<b>" + feature.properties.nombre + "</b>";
+
+        // Solicitar los datos de ICA para Bolívar
+        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    data.forEach(row => {
+                        tabla += `<tr>
+                            <td>${row["%OD ()"]}</td>
+                            <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
+                            <td>${row["pH"]}</td>
+                            <td>${row["DBO5 (mg O2/L)"]}</td>
+                            <td>${row["Cambio de Temp ºC"]}</td>
+                            <td>${row["Fosfatos (mg/L)"]}</td>
+                            <td>${row["Nitratos (mg/L)"]}</td>
+                            <td>${row["Turbidez (NTU)"]}</td>
+                            <td>${row["TDS (mg/L)"]}</td>
+                            <td>${row["valor_ica"]}</td>
+                        </tr>`;
+                    });
+                    tabla += "</table></div>";
+                    contenidoPopup += tabla;
+                    layer.bindPopup(contenidoPopup);
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener los datos de ICA:", error);
+                layer.bindPopup("Error al cargar los datos de ICA.");
+            });
+    }
+});
+
+// Lógica para activar/desactivar la capa de Bolívar
 document.getElementById('bolivar').onchange = function () {
     if (this.checked) {
         map.addLayer(bolivarLayer);
+        map.addLayer(marcadorBolivar);
     } else {
+        map.removeLayer(marcadorBolivar);
         map.removeLayer(bolivarLayer);
     }
 };
+
+
+
+/////////////////////////////////////////
+
+
 
 // Lógica para activar/desactivar las capas de Cantones Chimborazo
 document.getElementById('canton1chimborazo').onchange = function () {
