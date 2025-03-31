@@ -20,17 +20,30 @@
 // Crear la capa GeoJSON (pero sin agregarla aún al mapa)
 var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
     onEachFeature: function (feature, layer) {
-        var contenidoPopup =  "<b>" + feature.properties.nombre + "</b>";
+        console.log("🔵 Procesando región:", feature.properties.regionId);
+        var contenidoPopup = `<b>${feature.properties.nombre}</b>`;
 
-        // Realizar una solicitud a la API backend para obtener los datos de la provincia
-        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
-            .then(response => response.json())
+        // 🔹 URL absoluta para obtener datos de ICA
+        let icaUrl = `http://localhost:3000/get-ica-data?regionId=${feature.properties.regionId}`;
+        console.log("🟠 Solicitando ICA:", icaUrl);
+
+        fetch(icaUrl)
+            .then(response => {
+                console.log("🟢 Respuesta ICA recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta ICA:", response.status);
+                    throw new Error(`Error ${response.status} en ICA`);
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data && data.length > 0) {
-                    // Crear una tabla HTML con los datos de la provincia
+                console.log("🟢 Datos de ICA obtenidos:", data);
+                if (!(data && data.length > 0)) {
+                    contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
+                } else {
+                    // Construir la tabla con los datos de ICA
                     var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
 
-                    // Recorrer los datos de la tabla ica y agregar las filas a la tabla
                     data.forEach(row => {
                         tabla += `<tr>
                             <td>${row["%OD ()"]}</td>
@@ -45,19 +58,42 @@ var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
                             <td>${row["valor_ica"]}</td>
                         </tr>`;
                     });
-                    tabla += "</table>";
-
-                    // Agregar la tabla a la ventana emergente (popup)
+                    tabla += "</table></div>";
                     contenidoPopup += tabla;
-                    layer.bindPopup(contenidoPopup);
                 }
+
+                // 🔹 URL absoluta para obtener la predicción
+                let prediccionUrl = `http://localhost:5000/prediccion?region_id=${feature.properties.regionId}`;
+                console.log("🟠 Solicitando predicción:", prediccionUrl);
+
+                return fetch(prediccionUrl);
+            })
+            .then(response => {
+                console.log("🟢 Respuesta predicción recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta de predicción:", response.status);
+                    throw new Error(`Error ${response.status} en predicción`);
+                }
+                return response.json();
+            })
+            .then(prediccionData => {
+                console.log("🟢 Datos de predicción obtenidos:", prediccionData);
+                if (prediccionData.prediccion !== undefined) {
+                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                } else {
+                    contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
+                }
+                console.log("🔵 Contenido final del popup:", contenidoPopup);
+                layer.bindPopup(contenidoPopup);
             })
             .catch(error => {
-                console.error("Error al obtener los datos de ICA:", error);
-                layer.bindPopup("Error al cargar los datos de ICA.");
+                console.error("❌ Error en el proceso:", error);
+                contenidoPopup += `<p><strong>Error al obtener datos.</strong></p>`;
+                layer.bindPopup(contenidoPopup);
             });
     }
 });
+
 
 document.getElementById('chimborazo').onchange = function () {
     if (this.checked) {
@@ -95,15 +131,30 @@ var puntosTungurahuaGeoJSON = {
 // Crear la capa GeoJSON de Tungurahua
 var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
     onEachFeature: function (feature, layer) {
-        var contenidoPopup = 
-                             "<b>" + feature.properties.nombre + "</b>";
+        console.log("🔵 Procesando región:", feature.properties.regionId);
+        var contenidoPopup = `<b>${feature.properties.nombre}</b>`;
 
-        // Solicitar los datos de ICA para Tungurahua
-        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
-            .then(response => response.json())
+        // 🔹 URL absoluta para obtener datos de ICA
+        let icaUrl = `http://localhost:3000/get-ica-data?regionId=${feature.properties.regionId}`;
+        console.log("🟠 Solicitando ICA:", icaUrl);
+
+        fetch(icaUrl)
+            .then(response => {
+                console.log("🟢 Respuesta ICA recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta ICA:", response.status);
+                    throw new Error(`Error ${response.status} en ICA`);
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data && data.length > 0) {
+                console.log("🟢 Datos de ICA obtenidos:", data);
+                if (!(data && data.length > 0)) {
+                    contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
+                } else {
+                    // Construir la tabla con los datos de ICA
                     var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+
                     data.forEach(row => {
                         tabla += `<tr>
                             <td>${row["%OD ()"]}</td>
@@ -120,15 +171,41 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
                     });
                     tabla += "</table></div>";
                     contenidoPopup += tabla;
-                    layer.bindPopup(contenidoPopup);
                 }
+
+                // 🔹 URL absoluta para obtener la predicción
+                let prediccionUrl = `http://localhost:5000/prediccion?region_id=${feature.properties.regionId}`;
+                console.log("🟠 Solicitando predicción:", prediccionUrl);
+
+                return fetch(prediccionUrl);
+            })
+            .then(response => {
+                console.log("🟢 Respuesta predicción recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta de predicción:", response.status);
+                    throw new Error(`Error ${response.status} en predicción`);
+                }
+                return response.json();
+            })
+            .then(prediccionData => {
+                console.log("🟢 Datos de predicción obtenidos:", prediccionData);
+                if (prediccionData.prediccion !== undefined) {
+                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                } else {
+                    contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
+                }
+                console.log("🔵 Contenido final del popup:", contenidoPopup);
+                layer.bindPopup(contenidoPopup);
             })
             .catch(error => {
-                console.error("Error al obtener los datos de ICA:", error);
-                layer.bindPopup("Error al cargar los datos de ICA.");
+                console.error("❌ Error en el proceso:", error);
+                contenidoPopup += `<p><strong>Error al obtener datos.</strong></p>`;
+                layer.bindPopup(contenidoPopup);
             });
     }
 });
+
+
 
 // Lógica para activar/desactivar la capa de Tungurahua
 document.getElementById('tungurahua').onchange = function () {
@@ -163,15 +240,30 @@ var puntosBolivarGeoJSON = {
 // Crear la capa GeoJSON de Bolívar
 var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
     onEachFeature: function (feature, layer) {
-        var contenidoPopup = 
-                             "<b>" + feature.properties.nombre + "</b>";
+        console.log("🔵 Procesando región:", feature.properties.regionId);
+        var contenidoPopup = `<b>${feature.properties.nombre}</b>`;
 
-        // Solicitar los datos de ICA para Bolívar
-        fetch(`/get-ica-data?regionId=${feature.properties.regionId}`)
-            .then(response => response.json())
+        // 🔹 URL absoluta para obtener datos de ICA
+        let icaUrl = `http://localhost:3000/get-ica-data?regionId=${feature.properties.regionId}`;
+        console.log("🟠 Solicitando ICA:", icaUrl);
+
+        fetch(icaUrl)
+            .then(response => {
+                console.log("🟢 Respuesta ICA recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta ICA:", response.status);
+                    throw new Error(`Error ${response.status} en ICA`);
+                }
+                return response.json();
+            })
             .then(data => {
-                if (data && data.length > 0) {
+                console.log("🟢 Datos de ICA obtenidos:", data);
+                if (!(data && data.length > 0)) {
+                    contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
+                } else {
+                    // Construir la tabla con los datos de ICA
                     var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+
                     data.forEach(row => {
                         tabla += `<tr>
                             <td>${row["%OD ()"]}</td>
@@ -188,15 +280,40 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
                     });
                     tabla += "</table></div>";
                     contenidoPopup += tabla;
-                    layer.bindPopup(contenidoPopup);
                 }
+
+                // 🔹 URL absoluta para obtener la predicción
+                let prediccionUrl = `http://localhost:5000/prediccion?region_id=${feature.properties.regionId}`;
+                console.log("🟠 Solicitando predicción:", prediccionUrl);
+
+                return fetch(prediccionUrl);
+            })
+            .then(response => {
+                console.log("🟢 Respuesta predicción recibida:", response);
+                if (!response.ok) {
+                    console.error("❌ Error en la respuesta de predicción:", response.status);
+                    throw new Error(`Error ${response.status} en predicción`);
+                }
+                return response.json();
+            })
+            .then(prediccionData => {
+                console.log("🟢 Datos de predicción obtenidos:", prediccionData);
+                if (prediccionData.prediccion !== undefined) {
+                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                } else {
+                    contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
+                }
+                console.log("🔵 Contenido final del popup:", contenidoPopup);
+                layer.bindPopup(contenidoPopup);
             })
             .catch(error => {
-                console.error("Error al obtener los datos de ICA:", error);
-                layer.bindPopup("Error al cargar los datos de ICA.");
+                console.error("❌ Error en el proceso:", error);
+                contenidoPopup += `<p><strong>Error al obtener datos.</strong></p>`;
+                layer.bindPopup(contenidoPopup);
             });
     }
 });
+
 
 // Lógica para activar/desactivar la capa de Bolívar
 document.getElementById('bolivar').onchange = function () {
