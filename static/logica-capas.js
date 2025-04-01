@@ -79,7 +79,7 @@ var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
             .then(prediccionData => {
                 console.log("🟢 Datos de predicción obtenidos:", prediccionData);
                 if (prediccionData.prediccion !== undefined) {
-                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                    contenidoPopup += `<p><strong>Temperatura aproximada:</strong> ${prediccionData.prediccion.toFixed(2)}<strong>°C</strong> </p>`;
                 } else {
                     contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
                 }
@@ -190,7 +190,7 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
             .then(prediccionData => {
                 console.log("🟢 Datos de predicción obtenidos:", prediccionData);
                 if (prediccionData.prediccion !== undefined) {
-                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                    contenidoPopup += `<p><strong>Temperatura aproximada:</strong> ${prediccionData.prediccion.toFixed(2)}<strong>°C</strong> </p>`;
                 } else {
                     contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
                 }
@@ -299,7 +299,7 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
             .then(prediccionData => {
                 console.log("🟢 Datos de predicción obtenidos:", prediccionData);
                 if (prediccionData.prediccion !== undefined) {
-                    contenidoPopup += `<p><strong>Predicción:</strong> ${prediccionData.prediccion.toFixed(2)}</p>`;
+                    contenidoPopup += `<p><strong>Temperatura aproximada:</strong> ${prediccionData.prediccion.toFixed(2)}<strong>°C</strong> </p>`;
                 } else {
                     contenidoPopup += `<p><strong>Predicción:</strong> No disponible</p>`;
                 }
