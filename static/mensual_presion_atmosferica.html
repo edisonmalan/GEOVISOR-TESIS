@@ -332,7 +332,7 @@
   <!-- Contenido de la pagina -->
 			<main class="content">
 				<div class="container mt-4">
-                <h1>Estadisticas Mensual</h1>
+                <h1>Estadistica Mensual de la Presión Atmosférica</h1>
                 <form id="selectionForm">
                     <label for="region">Selecciona la región:</label>
                     <select id="region" name="region" required>
@@ -345,6 +345,12 @@
             
                     
 				</div>
+                <!-- Sección para los gráficos -->
+        <div class="container mt-4">
+            <canvas id="maxChart"></canvas>
+            <canvas id="minChart"></canvas>
+            <canvas id="avgChart"></canvas>
+          </div>
 			</main>
             
 
@@ -380,6 +386,118 @@
    
      <!-- Scripts de la plantilla, el mapa de Leaflet y la funcionalidad -->
   <script src="js/app.js"></script>
+    <!-- Incluir Chart.js desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Etiquetas para los días de la semana (eje X)
+      const labels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+  
+      // Datos ficticios mensuales para la Presión Atmosférica (en hPa)
+      // Cada array tiene 7 puntos (uno por día de la semana) y se generan variaciones que no coinciden mucho
+      const sampleData = {
+        Chimborazo: {
+          max: [1020, 1021, 1023, 1022, 1024, 1020, 1021],
+          min: [1005, 1006, 1008, 1007, 1008, 1005, 1006],
+          avg: [1012, 1013, 1015, 1014, 1016, 1012, 1013]
+        },
+        Bolivar: {
+          max: [1018, 1019, 1020, 1019, 1021, 1018, 1019],
+          min: [1003, 1004, 1005, 1004, 1005, 1003, 1004],
+          avg: [1011, 1012, 1013, 1012, 1014, 1011, 1012]
+        },
+        Tungurahua: {
+          max: [1030, 1023, 1024, 1023, 1030, 1022, 1023],
+          min: [1010, 1008, 1015, 1008, 1010, 1007, 1008],
+          avg: [1015, 1016, 1017, 1010, 1018, 1015, 1016]
+        }
+      };
+  
+      // Configuración base para los gráficos con títulos en los ejes
+      const chartOptions = {
+        responsive: true,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Día de la Semana'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Presión Atmosférica (hPa)'
+            }
+          }
+        }
+      };
+  
+      // Crear instancias de los gráficos
+      const ctxMax = document.getElementById('maxChart').getContext('2d');
+      const ctxMin = document.getElementById('minChart').getContext('2d');
+      const ctxAvg = document.getElementById('avgChart').getContext('2d');
+  
+      let maxChart = new Chart(ctxMax, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Máximo',
+            data: sampleData['Chimborazo'].max,
+            borderColor: 'red',
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: chartOptions
+      });
+  
+      let minChart = new Chart(ctxMin, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Mínimo',
+            data: sampleData['Chimborazo'].min,
+            borderColor: 'blue',
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: chartOptions
+      });
+  
+      let avgChart = new Chart(ctxAvg, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Promedio',
+            data: sampleData['Chimborazo'].avg,
+            borderColor: 'green',
+            fill: false,
+            tension: 0.1
+          }]
+        },
+        options: chartOptions
+      });
+  
+      // Función para actualizar los gráficos según la región seleccionada
+      function updateCharts(region) {
+        maxChart.data.datasets[0].data = sampleData[region].max;
+        minChart.data.datasets[0].data = sampleData[region].min;
+        avgChart.data.datasets[0].data = sampleData[region].avg;
+        maxChart.update();
+        minChart.update();
+        avgChart.update();
+      }
+  
+      // Evento del formulario para actualizar la región
+      document.getElementById('selectionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const region = document.getElementById('region').value;
+        updateCharts(region);
+      });
+    </script>
   
 </body>
 </html>

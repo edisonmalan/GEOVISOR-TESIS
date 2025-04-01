@@ -69,7 +69,7 @@ app.post('/upload-codigo1', upload.single('file'), async (req, res) => {
     fs.unlinkSync(filePath);
     console.log(`Archivo temporal eliminado: ${filePath}`);
 
-    res.json({ success: true, message: 'Datos insertados y valor ICA calculado correctamente con codigo1.' });
+    res.json({ success: true, message: 'Datos insertados y valor ICA calculado correctamente.' });
   } catch (error) {
     console.error('Error al procesar el archivo con codigo1:', error.message);
     res.status(500).json({ success: false, message: 'Error al procesar el archivo con codigo1.', error: error.message });
@@ -103,7 +103,7 @@ app.post('/upload-codigo2', upload.single('file'), async (req, res) => {
     fs.unlinkSync(filePath);
     console.log(`Archivo temporal eliminado: ${filePath}`);
 
-    res.json({ success: true, message: 'Datos insertados correctamente con codigo2.' });
+    res.json({ success: true, message: 'Datos insertados correctamente .' });
   } catch (error) {
     console.error('Error al procesar el archivo con codigo2:', error.message);
     res.status(500).json({ success: false, message: 'Error al procesar el archivo con codigo2.', error: error.message });

@@ -333,7 +333,7 @@
   <!-- Contenido de la pagina -->
 			<main class="content">
 				<div class="container mt-4">
-                <h1>Estadisticas Mensual</h1>
+                <h1>Estadistica Mensual de la Humedad relativa</h1>
                 <form id="selectionForm">
                     <label for="region">Selecciona la región:</label>
                     <select id="region" name="region" required>
@@ -346,6 +346,11 @@
             
                     
 				</div>
+                <div class="container mt-4">
+                    <canvas id="maxChart"></canvas>
+                    <canvas id="minChart"></canvas>
+                    <canvas id="avgChart"></canvas>
+                  </div>
 			</main>
             
 
@@ -381,6 +386,117 @@
    
      <!-- Scripts de la plantilla, el mapa de Leaflet y la funcionalidad -->
   <script src="js/app.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Etiquetas para los días de la semana
+    const labels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+
+    // Datos ficticios mensuales (7 puntos, uno por día de la semana) para cada región
+    const sampleData = {
+      Chimborazo: {
+        max: [38, 39, 30, 41, 20, 39, 38],
+        min: [30, 23, 36, 25, 24, 23, 22],
+        avg: [30, 40, 32, 30, 32, 31, 30]
+      },
+      Bolivar: {
+        max: [36, 30, 38, 25, 38, 40, 36],
+        min: [20, 33, 22, 30, 22, 21, 20],
+        avg: [28, 25, 30, 31, 26, 29, 28]
+      },
+      Tungurahua: {
+        max: [30, 41, 20, 43, 30, 41, 40],
+        min: [24, 25, 26, 27, 26, 25, 24],
+        avg: [30, 25, 34, 35, 33, 33, 32]
+      }
+    };
+
+    // Configuración base para los gráficos con títulos en los ejes
+    const chartOptions = {
+      responsive: true,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Día de la Semana'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Humedad Relativa (%)'
+          }
+        }
+      }
+    };
+
+    // Crear instancias de los gráficos
+    const ctxMax = document.getElementById('maxChart').getContext('2d');
+    const ctxMin = document.getElementById('minChart').getContext('2d');
+    const ctxAvg = document.getElementById('avgChart').getContext('2d');
+
+    let maxChart = new Chart(ctxMax, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Máximo',
+          data: sampleData['Chimborazo'].max,
+          borderColor: 'red',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    let minChart = new Chart(ctxMin, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Mínimo',
+          data: sampleData['Chimborazo'].min,
+          borderColor: 'blue',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    let avgChart = new Chart(ctxAvg, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Promedio',
+          data: sampleData['Chimborazo'].avg,
+          borderColor: 'green',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    // Función para actualizar los gráficos según la región seleccionada
+    function updateCharts(region) {
+      maxChart.data.datasets[0].data = sampleData[region].max;
+      minChart.data.datasets[0].data = sampleData[region].min;
+      avgChart.data.datasets[0].data = sampleData[region].avg;
+      maxChart.update();
+      minChart.update();
+      avgChart.update();
+    }
+
+    // Evento del formulario para actualizar la región
+    document.getElementById('selectionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const region = document.getElementById('region').value;
+      updateCharts(region);
+    });
+  </script>
   
 </body>
 </html>

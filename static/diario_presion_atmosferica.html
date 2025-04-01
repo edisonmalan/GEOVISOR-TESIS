@@ -332,7 +332,7 @@
   <!-- Contenido de la pagina -->
 			<main class="content">
 				<div class="container mt-4">
-                <h1>Estadisticas Diarias</h1>
+                <h1>Estadisticas Diarias de la Presión Atmosférica</h1>
                 <form id="selectionForm">
                     <label for="region">Selecciona la región:</label>
                     <select id="region" name="region" required>
@@ -345,6 +345,12 @@
             
                     
 				</div>
+                <!-- Gráficos -->
+        <div class="container mt-4">
+            <canvas id="maxChart"></canvas>
+            <canvas id="minChart"></canvas>
+            <canvas id="avgChart"></canvas>
+          </div>
 			</main>
             
 
@@ -380,6 +386,124 @@
    
      <!-- Scripts de la plantilla, el mapa de Leaflet y la funcionalidad -->
   <script src="js/app.js"></script>
+
+  <!-- Incluir Chart.js desde CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Etiquetas para las 24 horas del día
+    const labels = [
+      "00:00", "01:00", "02:00", "03:00", "04:00", "05:00",
+      "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
+      "12:00", "13:00", "14:00", "15:00", "16:00", "17:00",
+      "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"
+    ];
+
+    // Datos ficticios diarios para la Presión Atmosférica (en hPa)
+    // Se generan arrays de 24 valores con variaciones no muy coincidentes para cada región
+    const sampleData = {
+      Chimborazo: {
+        max: [1015, 1016, 1014, 1017, 1015, 1016, 1018, 1014, 1013, 1016, 1017, 1015, 1014, 1016, 1017, 1018, 1015, 1014, 1016, 1017, 1015, 1016, 1014, 1015],
+        min: [1005, 1006, 1004, 1007, 1005, 1006, 1008, 1004, 1003, 1006, 1007, 1005, 1004, 1006, 1007, 1008, 1005, 1004, 1006, 1007, 1005, 1006, 1004, 1005],
+        avg: [1010, 1011, 1009, 1012, 1010, 1011, 1013, 1009, 1008, 1011, 1012, 1010, 1009, 1011, 1012, 1013, 1010, 1009, 1011, 1012, 1010, 1011, 1009, 1010]
+      },
+      Bolivar: {
+        max: [1013, 1014, 1012, 1015, 1013, 1014, 1016, 1012, 1011, 1014, 1015, 1013, 1012, 1014, 1015, 1016, 1013, 1012, 1014, 1015, 1013, 1014, 1012, 1013],
+        min: [1003, 1004, 1002, 1005, 1003, 1004, 1006, 1002, 1001, 1004, 1005, 1003, 1002, 1004, 1005, 1006, 1003, 1002, 1004, 1005, 1003, 1004, 1002, 1003],
+        avg: [1008, 1009, 1007, 1010, 1008, 1009, 1011, 1007, 1006, 1009, 1010, 1008, 1007, 1009, 1010, 1011, 1008, 1007, 1009, 1010, 1008, 1009, 1007, 1008]
+      },
+      Tungurahua: {
+        max: [1017, 1018, 1016, 1019, 1017, 1018, 1020, 1016, 1015, 1018, 1019, 1017, 1016, 1018, 1019, 1020, 1017, 1016, 1018, 1019, 1017, 1018, 1016, 1017],
+        min: [1007, 1008, 1006, 1009, 1007, 1008, 1010, 1006, 1005, 1008, 1009, 1007, 1006, 1008, 1009, 1010, 1007, 1006, 1008, 1009, 1007, 1008, 1006, 1007],
+        avg: [1012, 1013, 1011, 1014, 1012, 1013, 1015, 1011, 1010, 1013, 1014, 1012, 1011, 1013, 1014, 1015, 1012, 1011, 1013, 1014, 1012, 1013, 1011, 1012]
+      }
+    };
+
+    // Configuración base para los gráficos, estableciendo títulos en los ejes
+    const chartOptions = {
+      responsive: true,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Hora del Día'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Presión Atmosférica (hPa)'
+          }
+        }
+      }
+    };
+
+    // Crear instancias de los gráficos
+    const ctxMax = document.getElementById('maxChart').getContext('2d');
+    const ctxMin = document.getElementById('minChart').getContext('2d');
+    const ctxAvg = document.getElementById('avgChart').getContext('2d');
+
+    let maxChart = new Chart(ctxMax, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Máximo',
+          data: sampleData['Chimborazo'].max,
+          borderColor: 'red',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    let minChart = new Chart(ctxMin, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Mínimo',
+          data: sampleData['Chimborazo'].min,
+          borderColor: 'blue',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    let avgChart = new Chart(ctxAvg, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Promedio',
+          data: sampleData['Chimborazo'].avg,
+          borderColor: 'green',
+          fill: false,
+          tension: 0.1
+        }]
+      },
+      options: chartOptions
+    });
+
+    // Función para actualizar los gráficos según la región seleccionada
+    function updateCharts(region) {
+      maxChart.data.datasets[0].data = sampleData[region].max;
+      minChart.data.datasets[0].data = sampleData[region].min;
+      avgChart.data.datasets[0].data = sampleData[region].avg;
+      maxChart.update();
+      minChart.update();
+      avgChart.update();
+    }
+
+    // Evento del formulario para actualizar la región
+    document.getElementById('selectionForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const region = document.getElementById('region').value;
+      updateCharts(region);
+    });
+  </script>
   
 </body>
 </html>
