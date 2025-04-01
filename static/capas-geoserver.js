@@ -55,7 +55,7 @@ var canton3chimborazoLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Ca
     zIndex: 1000
 });
 var canton4chimborazoLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Cantones/wms", {
-    layers: 'Cantones:Colta',
+    layers: 'Cantones:colta',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -713,7 +713,7 @@ var parroquia4tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserver
     zIndex: 1000
 });
 var parroquia5tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Parroquias/wms", {
-    layers: 'Parroquias:Baños de Agua Santa ',
+    layers: 'Parroquias:Banos de Agua Santa ',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -793,7 +793,7 @@ var parroquia14tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserve
     zIndex: 1000
 });
 var parroquia15tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Parroquias/wms", {
-    layers: 'Parroquias:El triunfo',
+    layers: 'Parroquias:El Triunfo',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1009,7 +1009,7 @@ var parroquia41tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserve
     zIndex: 1000
 });
 var parroquia42tungurahuaLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Parroquias/wms", {
-    layers: 'Parroquias:San Andres 2',
+    layers: 'Parroquias:San Andres2',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1124,7 +1124,7 @@ var parroquia2bolivarLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Pa
     zIndex: 1000
 });
 var parroquia3bolivarLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Parroquias/wms", {
-    layers: 'Parroquias:Facunda Vela',
+    layers: 'Parroquias:Facundo Vela',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1460,7 +1460,7 @@ var jatuchimbanaLayer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio
 });
 
 var gualcanga2000Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Gualcanga_2000',
+    layers: 'Estudio_Multitemporal:gualca_2000',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1468,7 +1468,7 @@ var gualcanga2000Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudi
     zIndex: 1000
 });
 var gualcanga2010Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Gualcanga_2010',
+    layers: 'Estudio_Multitemporal:gualca_2010',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1477,7 +1477,7 @@ var gualcanga2010Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudi
 });
 
 var gualcanga2020Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Gualcanga_2020',
+    layers: 'Estudio_Multitemporal:gualca_2020',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1486,7 +1486,7 @@ var gualcanga2020Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudi
 });
 
 var jatuchimbana2000Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Jatuchimbana_2000',
+    layers: 'Estudio_Multitemporal:jatu_2000',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1494,7 +1494,7 @@ var jatuchimbana2000Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Est
     zIndex: 1000
 });
 var jatuchimbana2010Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Jatuchimbana_2010',
+    layers: 'Estudio_Multitemporal:jatu_2010',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1503,7 +1503,7 @@ var jatuchimbana2010Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Est
 });
 
 var jatuchimbana2020Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Estudio_Multitemporal/wms", {
-    layers: 'Estudio_Multitemporal:Jatuchimbana 2020',
+    layers: 'Estudio_Multitemporal:jatu_2020',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",

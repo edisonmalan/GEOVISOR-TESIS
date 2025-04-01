@@ -42,10 +42,13 @@ var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
 
                     data.forEach(row => {
                         tabla += `<tr>
+                           <td>${row["Codigo Muestra"]}</td>
+                           <td>${row["Coordenada X"]}</td>
+                           <td>${row["Coordenada Y"]}</td>
                             <td>${row["%OD ()"]}</td>
                             <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
                             <td>${row["pH"]}</td>
@@ -153,10 +156,13 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
 
                     data.forEach(row => {
                         tabla += `<tr>
+                            <td>${row["Codigo Muestra"]}</td>
+                            <td>${row["Coordenada X"]}</td>
+                            <td>${row["Coordenada Y"]}</td>
                             <td>${row["%OD ()"]}</td>
                             <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
                             <td>${row["pH"]}</td>
@@ -262,10 +268,13 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
 
                     data.forEach(row => {
                         tabla += `<tr>
+                            <td>${row["Codigo Muestra"]}</td>
+                            <td>${row["Coordenada X"]}</td>
+                            <td>${row["Coordenada Y"]}</td>
                             <td>${row["%OD ()"]}</td>
                             <td>${row["Coliformes fecales (NMP/100 mL)"]}</td>
                             <td>${row["pH"]}</td>

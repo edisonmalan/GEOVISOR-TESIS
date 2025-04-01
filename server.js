@@ -154,7 +154,7 @@ app.get('/get-ica-data', async (req, res) => {
   try {
     // Realizar la consulta a la base de datos para obtener los datos de ICA
     const result = await pool.query(`
-      SELECT "%OD ()", "Coliformes fecales (NMP/100 mL)", "pH", "DBO5 (mg O2/L)", "Cambio de Temp ºC", "Fosfatos (mg/L)", "Nitratos (mg/L)", "Turbidez (NTU)", "TDS (mg/L)","valor_ica"
+      SELECT "Codigo Muestra","Coordenada X","Coordenada Y","%OD ()", "Coliformes fecales (NMP/100 mL)", "pH", "DBO5 (mg O2/L)", "Cambio de Temp ºC", "Fosfatos (mg/L)", "Nitratos (mg/L)", "Turbidez (NTU)", "TDS (mg/L)","valor_ica"
       FROM datosgeovisor.ica
       WHERE id_region = $1
     `, [regionId]);

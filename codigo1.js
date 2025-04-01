@@ -109,15 +109,15 @@ async function calculateAndSaveICA(regionId) {
     const result = await client.query(`SELECT * FROM datosgeovisor.ica WHERE id_region = $1`, [regionId]);
     for (const row of result.rows) {
       const values = {
-        "Oxígeno disuelto": row["%OD ()"],
-        "Coliformes fecales": row["Coliformes fecales (NMP/100 mL)"],
-        "pH": row.pH,
-        "DBO5": row["DBO5 (mg O2/L)"],
-        "Cambio de temperatura": row["Cambio de Temp ºC"],
-        "Fosfato": row["Fosfatos (mg/L)"],
-        "Nitratos": row["Nitratos (mg/L)"],
-        "Turbidez": row["Turbidez (NTU)"],
-        "TDS": row["TDS (mg/L)"],
+        "Oxígeno disuelto": Math.max(row["%OD ()"], 0),
+        "Coliformes fecales": Math.max(row["Coliformes fecales (NMP/100 mL)"], 0),
+        "pH": Math.max(row.pH, 0),
+        "DBO5": Math.max(row["DBO5 (mg O2/L)"], 0),
+        "Cambio de temperatura": Math.max(row["Cambio de Temp ºC"], 0),
+        "Fosfato": Math.max(row["Fosfatos (mg/L)"], 0),
+        "Nitratos": Math.max(row["Nitratos (mg/L)"], 0),
+        "Turbidez": Math.max(row["Turbidez (NTU)"], 0),
+        "TDS": Math.max(row["TDS (mg/L)"], 0),
       };
       const icaValue = calculateICA(values);
       await client.query(`UPDATE datosgeovisor.ica SET valor_ica = $1 WHERE id_ica = $2`, [icaValue, row.id_ica]);
