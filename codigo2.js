@@ -35,7 +35,7 @@ function roundToTwo(num) {
   return Math.round(num * 100) / 100;
 }
 
-// Función para insertar datos en la base de datos
+// Función para insertar datos en la tabla DATOS CLIMA
 async function insertData(data, regionId, tableName) {
   const client = await pool.connect();
   try {

@@ -1387,25 +1387,16 @@ var unidad9Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hid
     crs: L.CRS.EPSG3857,
     zIndex: 1000
 });
-var chimbon5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Chimbo_N5',
+var chimbon5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Chimbo_N5',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
     crs: L.CRS.EPSG3857,
     zIndex: 1000
 });
-var chimbon6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Chimbo_N6',
-    format: 'image/png',
-    transparent: true,
-    attribution: "&copy; GeoServer",
-    crs: L.CRS.EPSG3857,
-    zIndex: 1000
-});
-
-var piñanaton5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Piñanato_N5',
+var chimbon6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Chimbo_N6',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1413,16 +1404,8 @@ var piñanaton5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_
     zIndex: 1000
 });
 
-var piñanaton6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Piñanato_N6',
-    format: 'image/png',
-    transparent: true,
-    attribution: "&copy; GeoServer",
-    crs: L.CRS.EPSG3857,
-    zIndex: 1000
-});
-var suquibin5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Suquibi_N5',
+var piñanaton5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Piñanato_N5',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",
@@ -1430,8 +1413,25 @@ var suquibin5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Ac
     zIndex: 1000
 });
 
-var suquibin6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Bolivar_Acus_Cuencas/wms", {
-    layers: 'Bolivar_Acus_Cuencas:Suquibi_N6',
+var piñanaton6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Piñanato_N6',
+    format: 'image/png',
+    transparent: true,
+    attribution: "&copy; GeoServer",
+    crs: L.CRS.EPSG3857,
+    zIndex: 1000
+});
+var suquibin5Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Suquibi_N5',
+    format: 'image/png',
+    transparent: true,
+    attribution: "&copy; GeoServer",
+    crs: L.CRS.EPSG3857,
+    zIndex: 1000
+});
+
+var suquibin6Layer = L.tileLayer.wms("http://localhost:8080/geoserver/Unidades_Hidrigraficas/wms", {
+    layers: 'Unidades_Hidrigraficas:Suquibi_N6',
     format: 'image/png',
     transparent: true,
     attribution: "&copy; GeoServer",

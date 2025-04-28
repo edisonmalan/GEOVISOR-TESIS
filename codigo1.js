@@ -48,7 +48,7 @@ function normalizeValue(value) {
     : value;
 }
 
-// Función para insertar datos en la tabla
+// Función para insertar datos en la ICA
 async function insertData(data, regionId) {
   const client = await pool.connect();
   try {
