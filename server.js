@@ -1,4 +1,4 @@
-// CODIGO DEL SERVIDOR CENTRAL
+// CODIGO DEL SERVIDOR CENTRAL - server.js
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -197,6 +197,8 @@ app.delete('/api/datos/ica/:id', async (req, res) => {
   }
 });
 
+
+
 // ----------------------------------------
 // API para obtener todos los datos de la tabla DatosClima
 // ----------------------------------------
@@ -221,6 +223,7 @@ app.delete('/api/datos/clima/:id', async (req, res) => {
     res.status(500).json({ message: "Error al eliminar registro Clima." });
   }
 });
+
 
 // ----- Eliminación por Rango de Fechas -----
 
@@ -260,6 +263,148 @@ app.delete('/api/datos/clima', async (req, res) => {
   }
 });
 
+// ----------------------------------------
+// -- INICIO: RUTA GRAFICOS (Agregar este bloque) --
+// ----------------------------------------
+/*
+  Ruta genérica para obtener datos de gráficas climáticas según:
+  - :variable  → nombre de la variable climática (humedad_relativa, presion_atmosferica, etc.)
+  - :periodo   → diario, mensual, anual
+  - ?regionId  → query param obligatorio (ID numérico de la región)
+  Responde JSON con: { labels: [...], promedio: [...], maximo: [...], minimo: [...] }
+*/
+app.get('/api/graficos/:variable/:periodo', async (req, res) => {
+  try {
+    const { variable, periodo } = req.params;
+    const regionId = parseInt(req.query.regionId, 10);
+
+    // Validar regionId
+    if (!regionId || isNaN(regionId)) {
+      return res.status(400).json({ message: 'regionId es obligatorio y debe ser un número válido.' });
+    }
+
+    // 3.1) Mapear "variable" a las columnas de la tabla datosclima
+    let colProm, colMax, colMin;
+    const fechaField = 'fecha';
+
+    switch (variable) {
+      case 'humedad_relativa':
+        colProm = 'humedad_relativa_promedio';
+        colMax  = 'humedad_relativa_maximo';
+        colMin  = 'humedad_relativa_minimo';
+        break;
+      case 'presion_atmosferica':
+        colProm = 'presion_atmosferica_promedio';
+        colMax  = 'presion_atmosferica_maximo';
+        colMin  = 'presion_atmosferica_minimo';
+        break;
+      case 'radiacion_difusa':
+        colProm = 'radiacion_difusa_promedio';
+        colMax  = 'radiacion_difusa_maximo';
+        colMin  = 'radiacion_difusa_minimo';
+        break;
+      case 'radiacion_global':
+        colProm = 'radiacion_global_promedio';
+        colMax  = 'radiacion_global_maximo';
+        colMin  = 'radiacion_global_minimo';
+        break;
+      case 'temperatura_2m':
+        colProm = 'temperatura_ambiente_promedio';
+        colMax  = 'temperatura_ambiente_maximo';
+        colMin  = 'temperatura_ambiente_minimo';
+        break;
+      case 'temperatura_suelo':
+        // Usamos nivel 1 como ejemplo. Si deseas otro nivel, hay que modificar aquí.
+        colProm = 'temperatura_suelo_nivel1_promedio';
+        colMax  = 'temperatura_suelo_nivel1_maximo';
+        colMin  = 'temperatura_suelo_nivel1_minimo';
+        break;
+      case 'precipitacion':
+        colProm = 'precipitacion';
+        colMax  = 'precipitacion';
+        colMin  = 'precipitacion';
+        break;
+      case 'velocidad_viento':
+        colProm = 'velocidad_viento_promedio';
+        colMax  = 'velocidad_viento_maximo';
+        colMin  = 'velocidad_viento_minimo';
+        break;
+      case 'direccion_viento':
+        colProm = 'direccion_viento_promedio';
+        colMax  = 'direccion_viento_maximo';
+        colMin  = 'direccion_rafaga_viento'; // En lugar de mínimo real
+        break;
+      default:
+        return res.status(400).json({ message: 'Variable inválida.' });
+    }
+
+    // 3.2) Construir la consulta SQL según “periodo”
+    let queryText = '';
+    const queryParams = [ regionId ];
+
+    if (periodo === 'diario') {
+      // Traer cada fila por fecha
+      queryText = `
+        SELECT 
+          ${fechaField} AS etiqueta, 
+          ${colProm}  AS promedio, 
+          ${colMax}   AS maximo, 
+          ${colMin}   AS minimo
+        FROM datosgeovisor.datosclima
+        WHERE id_region = $1
+        ORDER BY ${fechaField} ASC
+      `;
+    }
+    else if (periodo === 'mensual') {
+      // Agrupar por mes
+      queryText = `
+        SELECT 
+          TO_CHAR(date_trunc('month', ${fechaField}), 'YYYY-MM') AS etiqueta,
+          ROUND(AVG(${colProm})::numeric, 2) AS promedio,
+          ROUND(MAX(${colMax})::numeric, 2)  AS maximo,
+          ROUND(MIN(${colMin})::numeric, 2)  AS minimo
+        FROM datosgeovisor.datosclima
+        WHERE id_region = $1
+        GROUP BY date_trunc('month', ${fechaField})
+        ORDER BY date_trunc('month', ${fechaField}) ASC
+      `;
+    }
+    else if (periodo === 'anual') {
+      // Agrupar por año
+      queryText = `
+        SELECT 
+          TO_CHAR(date_trunc('year', ${fechaField}), 'YYYY') AS etiqueta,
+          ROUND(AVG(${colProm})::numeric, 2) AS promedio,
+          ROUND(MAX(${colMax})::numeric, 2)  AS maximo,
+          ROUND(MIN(${colMin})::numeric, 2)  AS minimo
+        FROM datosgeovisor.datosclima
+        WHERE id_region = $1
+        GROUP BY date_trunc('year', ${fechaField})
+        ORDER BY date_trunc('year', ${fechaField}) ASC
+      `;
+    }
+    else {
+      return res.status(400).json({ message: 'Periodo inválido. Use diario, mensual o anual.' });
+    }
+
+    // 3.3) Ejecutar la consulta y devolver los datos
+    const { rows } = await pool.query(queryText, queryParams);
+
+    // Formatear arrays para JSON
+    const labels   = rows.map(r => r.etiqueta);
+    const promedio = rows.map(r => parseFloat(r.promedio));
+    const maximo   = rows.map(r => parseFloat(r.maximo));
+    const minimo   = rows.map(r => parseFloat(r.minimo));
+
+    return res.json({ labels, promedio, maximo, minimo });
+  } catch (error) {
+    console.error('Error en /api/graficos/:variable/:periodo →', error);
+    return res.status(500).json({ message: 'Error interno al obtener datos de gráficos.' });
+  }
+});
+// ----------------------------------------
+// -- FIN: RUTA GRAFICOS --
+// ----------------------------------------
 
 
 
