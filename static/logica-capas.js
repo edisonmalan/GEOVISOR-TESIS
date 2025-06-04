@@ -42,9 +42,22 @@ var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th><th>Calidad ICA</th></tr>";
 
                     data.forEach(row => {
+
+                         // Función para determinar calidad ICA según valor
+    function obtenerCalidadICA(valor) {
+        if (valor >= 90 && valor <= 100) return "Excelente";
+        if (valor >= 70 && valor < 90) return "Bueno";
+        if (valor >= 50 && valor < 70) return "Medio";
+        if (valor >= 25 && valor < 50) return "Malo";
+        if (valor >= 0 && valor < 25) return "Muy malo";
+        return "Desconocido";
+    }
+
+    const calidad = obtenerCalidadICA(row["valor_ica"]);
+                        
                         tabla += `<tr>
                            <td>${row["Codigo Muestra"]}</td>
                            <td>${row["Coordenada X"]}</td>
@@ -59,6 +72,7 @@ var marcadorChimborazo = L.geoJSON(puntosChimborazoGeoJSON, {
                             <td>${row["Turbidez (NTU)"]}</td>
                             <td>${row["TDS (mg/L)"]}</td>
                             <td>${row["valor_ica"]}</td>
+                            <td>${calidad }</td>
                         </tr>`;
                     });
                     tabla += "</table></div>";
@@ -156,9 +170,18 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th><th>Calidad ICA</th></tr>";
 
                     data.forEach(row => {
+                          // Función para determinar calidad ICA según valor
+    function obtenerCalidadICA(valor) {
+        if (valor >= 90 && valor <= 100) return "Excelente";
+        if (valor >= 70 && valor < 90) return "Bueno";
+        if (valor >= 50 && valor < 70) return "Medio";
+        if (valor >= 25 && valor < 50) return "Malo";
+        if (valor >= 0 && valor < 25) return "Muy malo";
+        return "Desconocido";
+    }
                         tabla += `<tr>
                             <td>${row["Codigo Muestra"]}</td>
                             <td>${row["Coordenada X"]}</td>
@@ -173,6 +196,7 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
                             <td>${row["Turbidez (NTU)"]}</td>
                             <td>${row["TDS (mg/L)"]}</td>
                             <td>${row["valor_ica"]}</td>
+                            <td>${calidad }</td>
                         </tr>`;
                     });
                     tabla += "</table></div>";
@@ -268,9 +292,18 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
                     contenidoPopup += "<p>No hay datos de ICA disponibles.</p>";
                 } else {
                     // Construir la tabla con los datos de ICA
-                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th></tr>";
+                    var tabla = "<div class='popup-table-container'><table class='popup-table'><tr><th>Codigo de Muestra</th><th>Coordenada X</th><th>Coordenada Y</th><th>%OD</th><th>Coliformes fecales</th><th>pH</th><th>DBO5</th><th>Cambio de Temp</th><th>Fosfatos</th><th>Nitratos</th><th>Turbidez</th><th>TDS</th><th>ICA</th><th>Calidad ICA</th></tr>";
 
                     data.forEach(row => {
+                          // Función para determinar calidad ICA según valor
+    function obtenerCalidadICA(valor) {
+        if (valor >= 90 && valor <= 100) return "Excelente";
+        if (valor >= 70 && valor < 90) return "Bueno";
+        if (valor >= 50 && valor < 70) return "Medio";
+        if (valor >= 25 && valor < 50) return "Malo";
+        if (valor >= 0 && valor < 25) return "Muy malo";
+        return "Desconocido";
+    }
                         tabla += `<tr>
                             <td>${row["Codigo Muestra"]}</td>
                             <td>${row["Coordenada X"]}</td>
@@ -285,6 +318,7 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
                             <td>${row["Turbidez (NTU)"]}</td>
                             <td>${row["TDS (mg/L)"]}</td>
                             <td>${row["valor_ica"]}</td>
+                            <td>${calidad }</td>
                         </tr>`;
                     });
                     tabla += "</table></div>";
