@@ -39,7 +39,72 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       // data = { labels: [...], promedio: [...], maximo: [...], minimo: [...] }
 
-      renderizarGraficas(data.labels, data.promedio, data.maximo, data.minimo);
+     
+      // ----------------------------------------
+      // INICIO: Bloque para transformar etiquetas según periodo
+      // ----------------------------------------
+      let etiquetasTransformadas = data.labels;
+
+      if (periodo === 'diario') {
+        // Agrupar por día de la semana y calcular promedio/max/min agrupados
+        const diasSemanaArray = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const agrupado = {};
+
+        data.labels.forEach((fechaStr, index) => {
+          const date = new Date(fechaStr);
+          const diaSemana = diasSemanaArray[date.getDay()];
+
+          if (!agrupado[diaSemana]) {
+            agrupado[diaSemana] = { promedio: [], maximo: [], minimo: [] };
+          }
+          agrupado[diaSemana].promedio.push(data.promedio[index]);
+          agrupado[diaSemana].maximo.push(data.maximo[index]);
+          agrupado[diaSemana].minimo.push(data.minimo[index]);
+        });
+
+        const etiquetasAgrupadas = diasSemanaArray.filter(dia => agrupado[dia]);
+        const promedioAgrupado = etiquetasAgrupadas.map(dia =>
+          calcularPromedio(agrupado[dia].promedio)
+        );
+        const maximoAgrupado = etiquetasAgrupadas.map(dia =>
+          Math.max(...agrupado[dia].maximo)
+        );
+        const minimoAgrupado = etiquetasAgrupadas.map(dia =>
+          Math.min(...agrupado[dia].minimo)
+        );
+
+        etiquetasTransformadas = etiquetasAgrupadas;
+        data.promedio = promedioAgrupado;
+        data.maximo = maximoAgrupado;
+        data.minimo = minimoAgrupado;
+
+      } else if (periodo === 'mensual') {
+        // Convertir etiquetas "YYYY-MM" a nombre de mes en español
+        const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        etiquetasTransformadas = data.labels.map(label => {
+          // label viene como "2025-05"
+          const parts = label.split('-');
+          const mesIndex = parseInt(parts[1], 10) - 1; // "05" → 4
+          return meses[mesIndex];
+        });
+        // data.promedio, data.maximo y data.minimo ya están agrupados por mes desde el backend.
+      }
+      // Para 'anual' no se transforma, se mantiene data.labels que son años.
+
+      // ----------------------------------------
+      // FIN: Bloque para transformar etiquetas según periodo
+      // ----------------------------------------
+      // === INICIO: Función auxiliar para calcular promedio ===
+function calcularPromedio(arr) {
+  if (!arr.length) return 0;
+  const suma = arr.reduce((acc, val) => acc + val, 0);
+  return suma / arr.length;
+}
+// === FIN: Función auxiliar para calcular promedio ===
+
+
+      renderizarGraficas(etiquetasTransformadas, data.promedio, data.maximo, data.minimo);
     } catch (err) {
       console.error('Error al obtener datos del backend:', err);
     }
