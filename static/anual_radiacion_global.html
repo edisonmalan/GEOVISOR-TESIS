@@ -346,6 +346,20 @@
             
                     
 				</div>
+                <!-- Sección para las gráficas -->
+       <!-- 2) Aquí indicamos al script qué variable y periodo usar -->
+                <div id="grafico-container"
+                     data-variable="radiacion_global"
+                     data-periodo="anual">
+                </div>
+
+                <!-- 3) En esta sección van los 3 canvas para las 3 gráficas -->
+                <div class="container mt-4">
+                    <canvas id="avgChart"></canvas>
+                    <canvas id="maxChart"></canvas>
+                    <canvas id="minChart"></canvas>
+                </div>
+              
 			</main>
             
 
@@ -381,6 +395,7 @@
    
      <!-- Scripts de la plantilla, el mapa de Leaflet y la funcionalidad -->
   <script src="js/app.js"></script>
+  <script src="graficos.js"></script>
   
 </body>
 </html>

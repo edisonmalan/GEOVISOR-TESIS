@@ -182,6 +182,7 @@ var marcadorTungurahua = L.geoJSON(puntosTungurahuaGeoJSON, {
         if (valor >= 0 && valor < 25) return "Muy malo";
         return "Desconocido";
     }
+      const calidad = obtenerCalidadICA(row["valor_ica"]);
                         tabla += `<tr>
                             <td>${row["Codigo Muestra"]}</td>
                             <td>${row["Coordenada X"]}</td>
@@ -304,6 +305,7 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
         if (valor >= 0 && valor < 25) return "Muy malo";
         return "Desconocido";
     }
+      const calidad = obtenerCalidadICA(row["valor_ica"]);
                         tabla += `<tr>
                             <td>${row["Codigo Muestra"]}</td>
                             <td>${row["Coordenada X"]}</td>
@@ -318,7 +320,7 @@ var marcadorBolivar = L.geoJSON(puntosBolivarGeoJSON, {
                             <td>${row["Turbidez (NTU)"]}</td>
                             <td>${row["TDS (mg/L)"]}</td>
                             <td>${row["valor_ica"]}</td>
-                            <td>${calidad }</td>
+                            <td>${calidad}</td>
                         </tr>`;
                     });
                     tabla += "</table></div>";
